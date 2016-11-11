@@ -1,0 +1,38 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="breadcrumbs-main">
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Account</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="account">
+        <div class="container">
+            <div class="account-top heading">
+                <h2>ACCOUNT</h2>
+            </div>
+            <div class="account-main">
+                <div class="col-md-6 account-left">
+                    <h3>Enter your Name and Email</h3>
+                    <div class="account-bottom">
+                        <p>Message was sent to Email</p>
+                    </div>
+                </div>
+                <div class="col-md-6 account-right account-left">
+                    <h3>New User? Create an Account</h3>
+                    <p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
+                    <a href="{{ path('register') }}">Create an Account</a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
