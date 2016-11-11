@@ -1,0 +1,3 @@
+itra_homepage:
+    path:     /
+    defaults: { _controller: ItraBundle:Default:index }
