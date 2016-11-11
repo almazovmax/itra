@@ -54,7 +54,7 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('login', array('id' => $user->getId()));
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('ItraBundle:Page:register.html.twig', array(
