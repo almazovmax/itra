@@ -1,0 +1,70 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+<div class="register">
+    <div class="container">
+        <div class="register-top heading">
+            <h2>Register</h2>
+        </div>
+        <div class="clearfix"></div>
+        <div class="register-main">
+
+
+
+            {{ form_start(form, {
+                'method': 'POST',
+            }) }}
+            {{ form_errors(form) }}
+            <div class="col-md-6 account-left">
+            {{ form_row(form.username, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Name'
+                },
+                'label_attr': {
+                    'class': 'sr-only'
+                }
+            }) }}
+            {{ form_row(form.email, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Email'
+                },
+                'label_attr': {
+                    'class': 'sr-only'
+                }
+            }) }}
+            </div>
+            <div class="col-md-6 account-left">
+            {{ form_row(form.plainPassword.first, {
+                'label': 'Password',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Password'
+                },
+                'label_attr': {
+                    'class': 'sr-only'
+                },
+            }) }}
+            {{ form_row(form.plainPassword.second, {
+                'label': 'Password',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Repeat Password'
+                },
+                'label_attr': {
+                    'class': 'sr-only'
+                },
+            }) }}
+            </div>
+            {{ form_rest(form) }}
+            <div class="address submit">
+                <input type="submit" name="submit" value="Sign Up">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

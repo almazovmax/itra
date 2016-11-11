@@ -4,8 +4,14 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+        our_db_provider:
+            entity:
+                class: ItraBundle:User
+                property: username
+
+    encoders:
+        ItraBundle\Entity\User:
+            algorithm: bcrypt
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,7 +20,25 @@ security:
             security: false
 
         main:
+            provider: our_db_provider
+
+            form_login:
+                login_path: /login
+                check_path: /login
+
+            logout:
+                path:   /logout
+                target: /login
             anonymous: ~
+    access_control:
+            - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/reset_pass, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/input_new_password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+
+
+
             # activate different ways to authenticate
 
             # http_basic: ~

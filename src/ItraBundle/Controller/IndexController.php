@@ -1,7 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Max Jumper
- * Date: 11.11.2016
- * Time: 14:45
- */
+namespace ItraBundle\Controller;
+
+use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class IndexController extends Controller
+{
+    /**
+     * @Route("/", name="homepage")
+     */
+    public function indexAction()
+    {
+        return $this->render('ItraBundle:Page:homepage.html.twig');
+    }
+}
