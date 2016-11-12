@@ -36,12 +36,12 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(name="date_create", type="string", length=100)
+     * @ORM\Column(name="date_create", type="date", length=100)
      */
     private $dateCreate;
 
     /**
-     * @ORM\Column(name="date_update",type="string", length=100)
+     * @ORM\Column(name="date_update",type="date", length=100)
      */
     private $dateUpdate;
 
@@ -78,6 +78,10 @@ class Product
     public function __construct() {
         $this->relationWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myRelation = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString() {
+        return $this->name;
     }
 
     /**

@@ -4,7 +4,7 @@ namespace ItraBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-class ProductRepository extends EntityRepository
+class CategoryRepository extends EntityRepository
 {
     public function findAll()
     {
