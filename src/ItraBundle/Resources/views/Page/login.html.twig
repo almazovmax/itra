@@ -34,6 +34,7 @@
                                     </ul>
                                 </div>
                             {% endif %}
+                            {{ message }}
 
                             <label for="username" class="sr-only">Username:</label>
                             <input type="text" id="username" name="_username" value="{{ last_username }}"  placeholder="Name" class="form-control" />
@@ -42,7 +43,7 @@
                             <input type="password" id="password" name="_password" placeholder="Password" class="form-control"/>
 
                             <div class="address">
-                                <a class="forgot" href="#">Forgot Your Password?</a>
+                                <a class="forgot" href="{{ path('reset_password') }}">Forgot Your Password?</a>
                                 <input type="submit" value="Login">
                             </div>
                         </form>

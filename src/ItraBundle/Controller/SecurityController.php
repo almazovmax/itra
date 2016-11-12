@@ -19,9 +19,12 @@ class SecurityController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        $message = $this->isFlash();
+
         return $this->render('ItraBundle:Page:login.html.twig', array(
             'last_username' => $lastUsername,
             'error'         => $error,
+            'message'       => $message,
         ));
     }
 
@@ -33,28 +36,36 @@ class SecurityController extends Controller
         $form = $this->createForm(UserType::class);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()) {
+        if($form->isSubmitted() && $form->isValid()) {
             $token = md5($request->getContent());
             $email = $form['email']->getData();
             $username = $form['username']->getData();
-            $this->getDoctrine()->getRepository('ItraBundle:User')->saveToken($token, $username);
-            $url = 'http://127.0.0.1:8000/new_password'.'?token='.$token;
-            $message = \Swift_Message::newInstance()
-                ->setSubject('Reset Password')
-                ->setFrom('itra@lol.by')
-                ->setTo($email)
-                ->setBody($this->renderView('ItraBundle:Mail:reset_password.txt.twig', array(
-                    'resetUrl' => $url,
-                    'username' => $username,
-                )));
+            $user = $this->getDoctrine()->getRepository('ItraBundle:User')->saveToken($token, $username, $email);
+            if(!$user) {
+                $notice = 'Invalid Name or Email';
+            } else {
+                $url = 'http://127.0.0.1:8000/new_password'.'?token='.$token;
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Reset Password')
+                    ->setFrom('itra@lol.by')
+                    ->setTo($email)
+                    ->setBody($this->renderView('ItraBundle:Mail:reset_password.txt.twig', array(
+                        'resetUrl' => $url,
+                        'username' => $username,
+                    )));
 
-            $this->get('mailer')->send($message);
+                $this->get('mailer')->send($message);
 
-            return $this->render('ItraBundle:Notice:send_link_reset_pass.html.twig');
+                $notice = 'Message was sent to Email';
+            }
+
+            return $this->render('ItraBundle:Notice:send_link_reset_pass.html.twig', array(
+                'message' => $notice,
+            ));
         }
 
         return $this->render('ItraBundle:Page:reset_password.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ));
     }
 
@@ -67,10 +78,18 @@ class SecurityController extends Controller
         $form = $this->createForm(UserType::class);
         $form->handleRequest($request);
 
+        $token=$request->get('token');
+        $em = $this->getDoctrine()->getRepository('ItraBundle:User');
+        $user = $em->findOneBy(array('token' => $token));
+
+        if(!$user){
+            $this->setFlash('Invalid token');
+            return $this->redirectToRoute('login');
+        }
+
         if($form->isSubmitted() && $form->isValid()) {
-            $token=$request->get('token');
-            $em = $this->getDoctrine()->getRepository('ItraBundle:User');
-            $user = $em->findOneBy(array('token' => $token));
+
+
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
@@ -78,11 +97,35 @@ class SecurityController extends Controller
             $em->saveNewPassword();
             $em->removeToken($user);
 
+            $this->setFlash('Password has been changed');
+
             return $this->redirectToRoute('login');
         }
 
         return $this->render('ItraBundle:Page:new_password.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    private function setFlash($message)
+    {
+        $session = new Session();
+
+        return $session
+            ->getFlashBag()
+            ->add('Reset', $message);
+    }
+
+    private function isFlash()
+    {
+        $session = new Session();
+        if($session->getFlashBag()->has('Reset')){
+            foreach ($session->getFlashBag()->get('Reset', array()) as $message) {
+            }
+        } else {
+            $message = null;
+        }
+
+        return $message;
     }
 }

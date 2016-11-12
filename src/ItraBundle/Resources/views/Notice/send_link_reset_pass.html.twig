@@ -22,8 +22,9 @@
                 <div class="col-md-6 account-left">
                     <h3>Enter your Name and Email</h3>
                     <div class="account-bottom">
-                        <p>Message was sent to Email</p>
+                        <p>{{ message }}</p>
                     </div>
+                    <a href="{{ asset(path('reset_password')) }}">Back</a>
                 </div>
                 <div class="col-md-6 account-right account-left">
                     <h3>New User? Create an Account</h3>

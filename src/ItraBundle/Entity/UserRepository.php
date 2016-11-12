@@ -20,9 +20,12 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return parent::findOneBy($criteria, $orderBy);
     }
 
-    public function saveToken($token, $username)
+    public function saveToken($token, $username, $email)
     {
-        $user = $this->loadUserByUsername($username);
+        $user = $this->findOneBy(array('username' => $username, 'email' => $email));
+        if(!$user){
+            return false;
+        }
         $user->setToken($token);
 
         $em = $this->getEntityManager();
