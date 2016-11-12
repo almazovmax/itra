@@ -1,0 +1,251 @@
+<?php
+
+namespace ItraBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="products")
+ * @ORM\Entity(repositoryClass="ItraBundle\Entity\ProductRepository")
+ */
+class Product
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+
+    /**
+     * @ORM\Column(name="name", type="string", length=100)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(name="description", type="text", length=1000, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(name="date_create", type="string", length=100)
+     */
+    private $dateCreate;
+
+    /**
+     * @ORM\Column(name="date_update",type="string", length=100)
+     */
+    private $dateUpdate;
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActiv;
+
+    /**
+     * @ORM\Column(name="image", type="string", length=255)
+     */
+    private $image;
+
+
+    /**
+     * @ORM\Column(name="sku", type="string", length=100)
+     */
+    private $sku;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="myRelation")
+     */
+    private $relationWithMe;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Product", inversedBy="relationWithMe")
+     * @ORM\JoinTable(name="relations",
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="relation_product_id", referencedColumnName="id")}
+     *      )
+     */
+    private $myRelation;
+
+    public function __construct() {
+        $this->relationWithMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myRelation = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateCreate()
+    {
+        return $this->dateCreate;
+    }
+
+    /**
+     * @param mixed $dateCreate
+     */
+    public function setDateCreate($dateCreate)
+    {
+        $this->dateCreate = $dateCreate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateUpdate()
+    {
+        return $this->dateUpdate;
+    }
+
+    /**
+     * @param mixed $dateUpdate
+     */
+    public function setDateUpdate($dateUpdate)
+    {
+        $this->dateUpdate = $dateUpdate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsActiv()
+    {
+        return $this->isActiv;
+    }
+
+    /**
+     * @param mixed $isActiv
+     */
+    public function setIsActiv($isActiv)
+    {
+        $this->isActiv = $isActiv;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSku()
+    {
+        return $this->sku;
+    }
+
+    /**
+     * @param mixed $sku
+     */
+    public function setSku($sku)
+    {
+        $this->sku = $sku;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRelationWithMe()
+    {
+        return $this->relationWithMe;
+    }
+
+    /**
+     * @param mixed $relationWithMe
+     */
+    public function setRelationWithMe($relationWithMe)
+    {
+        $this->relationWithMe = $relationWithMe;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMyRelation()
+    {
+        return $this->myRelation;
+    }
+
+    /**
+     * @param mixed $myRelation
+     */
+    public function setMyRelation($myRelation)
+    {
+        $this->myRelation = $myRelation;
+    }
+
+  }
