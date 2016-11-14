@@ -1,16 +1,109 @@
 {% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block javascripts %}
+{{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.ru.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap.file_input.js') }}"></script>
+{% endblock %}
+
+{% block stylesheet %}
+{{ parent() }}
+    <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('css/bootstrap.file_input.css') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
 
 {% block body %}
-    <h1>Product creation</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+<div class="single contact">
+    <div class="account-top heading">
+        <h2>Product creation</h2>
+    </div>
+    <div class="container">
+        <div class="single-main">
+            <div class="col-md-9 single-main-left">
+                <div class="sngl-top">
+                    <div class="col-md-6 single-top-left">
+                        {{ form_start(form) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.category) }}
+                        {{ form_row(form.description, {
+                            'attr': {
+                                'rows': 4,
+                            }
+                        }) }}
+                        {{ form_row(form.sku) }}
+                    </div>
+                    <div class="col-md-6 single-top-left">
 
-    <ul>
-        <li>
-            <a href="{{ path('product_index') }}">Back to the list</a>
-        </li>
-    </ul>
+                        {{ form_row(form.dateCreate) }}
+                        <script type="text/javascript">
+                            $(function () {
+                                $('.datepicker').datepicker({
+                                    format: "dd.mm.yyyy",
+                                    todayBtn: "linked",
+                                    language: "ru",
+                                    autoclose: true,
+                                    locale: "ru",
+                                    todayHighlight: true
+                                });
+                            });
+                        </script>
+                        {{ form_row(form.relationWithMe, {
+                        'attr': {
+                            'class': 'form-control',
+                        }
+                        }) }}
+                        {{ form_row(form.myRelation) }}
+                        {{ form_row(form.isActiv) }}
+                        {{ form_row(form._token) }}
+
+                    </div>
+                </div>
+
+                    <!-- image-preview-filename input [CUT FROM HERE]-->
+                    <div class="input-group image-preview">
+                        <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                        <span class="input-group-btn">
+                        <!-- image-preview-clear button -->
+                        <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                            <span class="glyphicon glyphicon-remove"></span> Clear
+                        </button>
+                            <!-- image-preview-input -->
+                        <div class="btn btn-default image-preview-input">
+                            <span class="glyphicon glyphicon-folder-open"></span>
+                            <span class="image-preview-input-title">Browse</span>
+                            {{ form_row(form.image, {
+                                'label_attr':{
+                                    'class': 'sr-only'
+                                }
+                            }) }} <!-- rename it -->
+                        </div>
+                        </span>
+                    </div><!-- /input-group image-preview [TO HERE]-->
+
+            </div>
+            <div class="col-md-3 single-right">
+                <div class="w_sidebar">
+                    <section  class="sky-form">
+                        <h4>Action</h4>
+                        <div class="row1 row2 scroll-pane">
+                            <div class="col col-4">
+                                <label>
+                                    <input class="btn btn-success" type="submit" value="Create" />
+                                    {{ form_end(form, {'render_rest': false}) }}
+                                </label>
+                                <label>
+                                    <a class="btn btn-warning" href="{{ path('product_index') }}">Back to the list</a>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

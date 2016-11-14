@@ -44,6 +44,10 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $product->getImage();
+            $fileName = $this->get('app.images_uploader')->upload($file);
+            $product->setImage('images/'.$fileName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush($product);

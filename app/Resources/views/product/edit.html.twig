@@ -1,21 +1,119 @@
 {% extends 'base.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+    {% block javascripts %}
+        {{ parent() }}
+        <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.ru.min.js') }}"></script>
+    {% endblock %}
 
-{% block body %}
-    <h1>Product edit</h1>
+    {% block stylesheet %}
+        {{ parent() }}
+        <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" media="all" />
+    {% endblock %}
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+    {% block body %}
 
-    <ul>
-        <li>
-            <a href="{{ path('product_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        <div class="single contact">
+            <div class="account-top heading">
+                <h2>Product creation</h2>
+            </div>
+            <div class="container">
+                <div class="single-main">
+                    <div class="col-md-9 single-main-left">
+                        <div class="sngl-top">
+                            <div class="col-md-5 single-top-left">
+                                {{ form_start(edit_form, {
+                                    'attr': {
+                                        'class': '',
+                                    }
+                                }) }}
+                                {{ form_row(edit_form.name, {
+                                    'attr': {
+                                        'class': 'form-control',
+                                    }
+                                }) }}
+                                {{ form_row(edit_form.category, {
+                                    'attr': {
+                                        'class': 'form-control',
+                                    }
+                                }) }}
+                                {{ form_row(edit_form.description, {
+                                    'attr': {
+                                        'class': 'form-control',
+                                    }
+                                }) }}
+                                {{ form_row(edit_form.sku, {
+                                    'attr': {
+                                        'class': 'form-control',
+                                    }
+                                }) }}
+                                {{ form_row(edit_form.isActiv, {
+                                    'attr': {
+                                        'class': 'checkbox',
+                                    }
+                                }) }}
+                            </div>
+                            <div class="col-md-5 single-top-left">
+
+
+                                {{ form_row(edit_form.dateUpdate) }}
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('.datepicker').datepicker({
+                                            format: "dd.mm.yyyy",
+                                            todayBtn: "linked",
+                                            language: "ru",
+                                            autoclose: true,
+                                            locale: "ru",
+                                            todayHighlight: true
+                                        });
+                                    });
+                                </script>
+                                {{ form_row(edit_form.image) }}
+                                {{ form_row(edit_form.relationWithMe, {
+                                    'attr': {
+                                        'class': 'form-control',
+                                    }
+                                }) }}
+                                {{ form_row(edit_form.myRelation, {
+                                    'attr': {
+                                        'class': 'form-control',
+                                    }
+                                }) }}
+                                {{ form_row(edit_form._token) }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 single-right">
+                        <div class="w_sidebar">
+                            <section  class="sky-form">
+                                <h4>Action</h4>
+                                <div class="row1 row2 scroll-pane">
+                                    <div class="col col-4">
+                                        <label>
+                                            <input class="btn btn-success" type="submit" value="Update" />
+                                            {{ form_end(edit_form, {'render_rest': false}) }}
+                                        </label>
+                                        <label>
+                                            {{ form_start(delete_form) }}
+                                            <input class="btn btn-danger" type="submit" value="Delete">
+                                            {{ form_end(delete_form) }}
+                                        </label>
+                                        <label>
+                                            <a class="btn btn-info" href="{{ path('product_new') }}">Create new</a>
+                                        </label>
+                                        <label>
+                                            <a class="btn btn-warning" href="{{ path('product_index') }}">Back to the list</a>
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
 {% endblock %}

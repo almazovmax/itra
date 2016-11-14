@@ -15,4 +15,9 @@ class ProductRepository extends EntityRepository
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
+
+    public function getQuery()
+    {
+
+    }
 }

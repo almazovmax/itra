@@ -3,6 +3,9 @@
 namespace ItraBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +16,26 @@ class ProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('description')->add('dateCreate')->add('dateUpdate')->add('isActiv')->add('image')->add('sku')->add('category')->add('relationWithMe')->add('myRelation')        ;
+        $builder->add('name')
+            ->add('description')
+            ->add('dateCreate', DateType::class, array(
+                'html5' => false,
+                'widget' => 'single_text',
+                'format' => 'dd.MM.yyyy',
+                'attr' => ['class' => 'datepicker'],
+            ))
+            ->add('dateUpdate', DateType::class, array(
+                'html5' => false,
+                'widget' => 'single_text',
+                'format' => 'dd.MM.yyyy',
+                'attr' => ['class' => 'datepicker'],
+            ))
+            ->add('isActiv', CheckboxType::class, array('required' => false))
+            ->add('image', FileType::class, array('data_class' => null, 'label' => false))
+            ->add('sku')
+            ->add('category')
+            ->add('relationWithMe')
+            ->add('myRelation');
     }
     
     /**

@@ -3,7 +3,7 @@
 namespace ItraBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -41,17 +41,19 @@ class Product
     private $dateCreate;
 
     /**
-     * @ORM\Column(name="date_update",type="date", length=100)
+     * @ORM\Column(name="date_update",type="date", length=100, nullable=true)
      */
     private $dateUpdate;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="is_active", type="boolean", nullable=true)
      */
     private $isActiv;
 
     /**
-     * @ORM\Column(name="image", type="string", length=255)
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Please, upload the image product as a JPG file.")
+     * @Assert\File(mimeTypes={"image/jpeg", "image/png", "image/jpg", "image/gif"})
      */
     private $image;
 
