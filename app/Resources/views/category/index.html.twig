@@ -1,5 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/bootstrap-treeview.js') }}"></script>
+{% endblock %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <link href="{{ asset('') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+
 {% block body %}
     <div class="product">
         <div class="container">
@@ -36,6 +47,68 @@
                         <a href="{{ path('category_new') }}">Create a new category</a>
                     </li>
                 </ul>
+{{ tree }}
+                <div id="tree"></div>
+                <script type="text/javascript">
+                    function getTree() {
+                        var tree = [
+                            {
+                                text: "Parent 1",
+                                nodes: [
+                                    {
+                                        text: "Child 1",
+                                        nodes: [
+                                            {
+                                                text: "Grandchild 1"
+                                            },
+                                            {
+                                                text: "Grandchild 2"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: "Child 2"
+                                    }
+                                ]
+                            },
+                            {
+                                text: "Parent 1",
+                                nodes: [
+                                    {
+                                        text: "Child 1",
+                                        nodes: [
+                                            {
+                                                text: "Grandchild 1"
+                                            },
+                                            {
+                                                text: "Grandchild 2"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: "Child 2"
+                                    }
+                                ]
+                            },
+                            {
+                                text: "Parent 2"
+                            },
+                            {
+                                text: "Parent 3"
+                            },
+                            {
+                                text: "Parent 4"
+                            },
+                            {
+                                text: "Parent 5"
+                            }
+                        ];
+                        return tree;
+                    }
+
+                    $('#tree').treeview({data: getTree()});
+                </script>
+
             </div>
         </div>
     </div>

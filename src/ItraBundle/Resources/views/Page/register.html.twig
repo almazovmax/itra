@@ -55,10 +55,11 @@
                 },
             }) }}
             </div>
-            {{ form_rest(form) }}
+            {{ form_row(form._token) }}
             <div class="address submit">
                 <input type="submit" name="submit" value="Sign Up">
             </div>
+            {{ form_end(form, {'render_rest': false}) }}
         </div>
     </div>
 </div>

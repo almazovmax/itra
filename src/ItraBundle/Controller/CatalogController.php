@@ -15,8 +15,22 @@ class CatalogController extends Controller
     {
         $pagination = $this->pagination($request);
 
+        $em = $this->getDoctrine()->getManager();
+
+        $categories = $em->getRepository('ItraBundle:Category')->findAll();
+
+        if($request->isXMLHttpRequest()) {
+            $pagination = $this->paginationAjax($request);
+
+            return $this->render('ItraBundle:Page:catalog_ajax.html.twig', array(
+                'pagination' => $pagination,
+                'categories' => $categories,
+            ));
+        }
+
         return $this->render('ItraBundle:Page:catalog.html.twig', array(
             'pagination' => $pagination,
+            'categories' => $categories,
         ));
     }
 
@@ -28,7 +42,22 @@ class CatalogController extends Controller
             ->createQueryBuilder('u')
             ->getQuery();
         $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 3);
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 6);
+
+        return $pagination;
+    }
+
+    public function paginationAjax(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em
+            ->getRepository('ItraBundle:Product')
+            ->createQueryBuilder('u')
+            ->where('u.category = :category')
+            ->setParameter('category', 3)
+            ->getQuery();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 6);
 
         return $pagination;
     }

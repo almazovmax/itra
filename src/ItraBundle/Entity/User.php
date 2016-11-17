@@ -3,9 +3,9 @@ namespace ItraBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="app_users")
@@ -51,11 +51,25 @@ class User implements UserInterface, \Serializable
      */
     private $token;
 
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $role;
+
     private $plainPassword;
 
     public function __construct()
     {
+        $this->role = new ArrayCollection();
         $this->isActive = true;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getSalt()
@@ -121,9 +135,20 @@ class User implements UserInterface, \Serializable
         $this->email = $email;
     }
 
-    public function getRoles()
+    /**
+     * @return mixed
+     */
+    public function getRole()
     {
-        return array('ROLE_USER');
+        return $this->role;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
     }
 
     /**
@@ -140,6 +165,30 @@ class User implements UserInterface, \Serializable
     public function setToken($token)
     {
         $this->token = $token;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param mixed $isActive
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+    }
+
+    /**
+     * @return array An array of Roles objects
+     */
+    public function getRoles()
+    {
+        return array($this->getRole());//->toArray();
     }
 
     public function eraseCredentials()

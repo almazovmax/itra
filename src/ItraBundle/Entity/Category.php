@@ -4,6 +4,7 @@ namespace ItraBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Category
@@ -18,11 +19,15 @@ class Category
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Groups({"category"})
      */
     private $id;
 
     /**
      * @ORM\Column(name="category_name", type="string", length=255, unique=true)
+     *
+     * @Groups({"category"})
      */
     private $name;
 
@@ -33,6 +38,8 @@ class Category
 
     /**
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
+     *
+     * @Groups({"category"})
      */
     private $children;
 

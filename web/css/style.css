@@ -966,7 +966,7 @@ a.mask {
     outline: none;
     padding: 20px;
     overflow: auto;
-    height: 155px;
+    height: auto;
 }
 .row2 {
 	height: 175px;

@@ -2,6 +2,7 @@
 namespace ItraBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -19,8 +20,14 @@ class UserType extends AbstractType
             ->add('username', TextType::class)
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                )
-            );
+                ))
+            ->add('role', ChoiceType::class, array(
+                'choices'  => array(
+                    'User' => 'ROLE_USER',
+                    'Moderator' => 'ROLE_MODERATOR',
+                    'Admin' => 'ROLE_ADMIN',
+                ),
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

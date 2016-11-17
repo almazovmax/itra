@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * User controller.
  *
- *
+ * @Route("user")
  */
 class UserController extends Controller
 {
@@ -49,6 +49,7 @@ class UserController extends Controller
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
+            $user->setRole('ROLE_USER');
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

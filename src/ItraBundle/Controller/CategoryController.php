@@ -5,7 +5,15 @@ namespace ItraBundle\Controller;
 use ItraBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 
 /**
  * Category controller.
@@ -23,11 +31,22 @@ class CategoryController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('ItraBundle:Category')->findBy(array('parent' => null));
 
-        $categories = $em->getRepository('ItraBundle:Category')->findAll();
+        $encoders = array(new JsonEncoder());
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $normalizer = new ObjectNormalizer($classMetadataFactory);
+        $normalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+
+        $serializer = new Serializer(array($normalizer), $encoders);
+
+        $tree = $serializer->serialize($categories, 'json', array('groups' => array('category')));
 
         return $this->render('category/index.html.twig', array(
             'categories' => $categories,
+            'tree' => $tree,
         ));
     }
 
