@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-    $(".li").click(function (e) {
+    $('#li').click(function (e) {
         e.preventDefault();
 
         var myData = $(this).attr("data-id");

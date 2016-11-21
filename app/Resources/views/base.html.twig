@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}Luxury Watches{% endblock %}</title>
+    <title>COURSE WORK ITRANSITION | {% block title %}{% endblock %}</title>
     {% block stylesheet %}
         <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" media="all" />
@@ -13,8 +13,6 @@
     {% block javascripts %}
         <script src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
         <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-        <script type="text/javascript" src="{{ asset('js/memenu.js') }}"></script>
-        <script>$(document).ready(function(){$(".memenu").memenu();});</script>
         <script src="{{ asset('js/jquery.easydropdown.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
@@ -24,7 +22,7 @@
 
 <!--start-logo-->
 <div class="logo">
-    <a href="index.html"><h1>COURSE WORK ITRANSITION</h1></a>
+    <a href="{{ path('homepage') }}"><h1>COURSE WORK ITRANSITION</h1></a>
 </div>
 <!--start-logo-->
 <!--bottom-header-->
@@ -40,10 +38,6 @@
                 <div class="clearfix"> </div>
             </div>
             <div class="col-md-3 header-right">
-                <div class="search-bar">
-                    <input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
-                    <input type="submit" value="">
-                </div>
             </div>
             <div class="clearfix"> </div>
         </div>
@@ -58,13 +52,10 @@
     <div class="container">
         <div class="footer-top">
             <div class="col-md-6 footer-left">
-                <form>
-                    <input type="text" value="Enter Your Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
-                    <input type="submit" value="Subscribe">
-                </form>
+
             </div>
             <div class="col-md-6 footer-right">
-                <p>© 2015 Luxury Watches. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
+                <p>© 2016 ITRA. All Rights Reserved | Design by  <a href="http://vk.com/almazovmax" target="_blank">Max</a> </p>
             </div>
             <div class="clearfix"></div>
         </div>
