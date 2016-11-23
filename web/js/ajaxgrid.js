@@ -4,20 +4,21 @@
 
 (function( $ ) {
         var settings = $.extend( {
-            'dataUrl'          : 'http://mylocalserver/ajax/products',
+            'dataUrl'          : 'http://127.0.0.1:8000/product',
             'sortableColumns'  : '[“id”, “title”, “created_date”]',
             'filterableColumns': '[“id”, “title”]',
             'rowsPerPage'      : '20'
-        }, options);
+        });
 
         var methods = {
             init : function( params ) {
                 var options = $.extend({}, settings, params);
-                $.getJSON(options.dataUrl,function (data) {
+                $("#entities-grid").append("<p>'It finally works!'</p>")
+                //$.getJSON(options.dataUrl,function (data) {
                     function createTable(response)
                     {
                         var c = [];
-                        c.push("<table class='sortable'>");
+                        //c.push("<table class='sortable table table-hover'>");
                         c.push("<thead class='dataColumns'>");
                         for(var prop in response)
                         {
@@ -51,16 +52,17 @@
                             }
                         );
                         c.push("</tbody>");
-                        c.push("</table>");
-                        c.push("<div id='paging'>"+"Showing"+"<span id='begin'>"+"</span>"+"-"+"<span id='end'>"+
-                        "</span>"+"of"+"<span id='size'>"+"</span>"+"<input id='last' class='btn' type='Button' value='Last' onclick='javascript:last()' />"+
-                        "<input id='next' class='btn' type='button' value='Next' onclick='javascript:next()'/>"+"</div>");
+                       // c.push("</table>");
+                       //  c.push("<div id='paging'>"+"Showing"+"<span id='begin'>"+"</span>"+"-"+"<span id='end'>"+
+                       //  "</span>"+"of"+"<span id='size'>"+"</span>"+"<input id='last' class='btn' type='Button' value='Last' onclick='javascript:last()' />"+
+                       //  "<input id='next' class='btn' type='button' value='Next' onclick='javascript:next()'/>"+"</div>");
                         return c;
                     }
-                    var response = $.parseJSON(data);
+                    var jsontext = '{"firstname":"Jesper","surname":"Aaberg","phone":["555-0100","555-0120"]}';
+                    var response = $.parseJSON(jsontext);
                     var c=createTable(response);
-                    $(this).after().html(c.join(""));
-                })
+                    $("#entities-grid").append("<table class='sortable table table-hover'>"+c+"</table>");
+                //})
             },
             update : function( params ) {
                 var options = $.extend({}, settings, params);
@@ -83,7 +85,8 @@
                         c.push("</tbody>");
                         return c;
                     }
-                    var response = $.parseJSON(data);
+                    var jsontext = '{"firstname":"Jesper","surname":"Aaberg","phone":["555-0100","555-0120"]}';
+                    var response = $.parseJSON(jsontext);
                     var c=createTable(response);
                     $(this).html(c.join(""));
                 })
