@@ -15,21 +15,30 @@
         return this.each(function() {
 
             $.getJSON(settings.dataUrl,function (data) {
-                var response = $.parseJSON(data);
-                responseHandler(response);
-
-                function responseHandler(response)
+                function createTable(response)
                 {
                     var c = [];
-                    $.each(response, function(i, item) {
-                        c.push("<tr><td>" + item.id + "</td>");
-                        c.push("<td>" + item.title + "</td>");
-                        c.push("<td>" + item.created_date + "</td></tr>");
-                    });
-
-                    $('#entities-grid').html(c.join(""));
+                    for(var prop in response)
+                        {
+                            if(response.hasOwnProperty(prop))
+                            c.push("<th>"+prop+"</th>");
+                        }
+                    $.each(response, function(i, item)
+                        {
+                            c.push("<tr>");
+                            for(var prop in response)
+                            {
+                                if(response.hasOwnProperty(prop))
+                                c.push("<td>"+response[prop]+"</td>");
+                            }
+                        c.push("</tr>");
+                        }
+                    );
+                    return c;
                 }
-
+                var response = $.parseJSON(data);
+                var c=createTable(response);
+                $(this).html(c.join(""));
             })
         });
 
