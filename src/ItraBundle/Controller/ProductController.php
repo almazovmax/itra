@@ -5,7 +5,8 @@ namespace ItraBundle\Controller;
 use ItraBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Product controller.
@@ -26,8 +27,13 @@ class ProductController extends Controller
 
         $products = $em->getRepository('ItraBundle:Product')->findAll();
 
+        $serializer = $this->get('app.product_serialize')->serializer();
+
+        $tree = $serializer->serialize($products, 'json');
+
         return $this->render('product/index.html.twig', array(
             'products' => $products,
+            'tree' => $tree
         ));
     }
 
