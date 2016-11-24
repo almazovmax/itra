@@ -9,17 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * User controller.
- *
- * @Route("user")
- */
 class UserController extends Controller
 {
     /**
      * Lists all user entities.
      *
-     * @Route("/", name="user_index")
+     * @Route("/user", name="user_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -67,7 +62,7 @@ class UserController extends Controller
     /**
      * Finds and displays a user entity.
      *
-     * @Route("/{id}", name="user_show")
+     * @Route("/user/{id}", name="user_show")
      * @Method("GET")
      */
     public function showAction(User $user)
@@ -83,7 +78,7 @@ class UserController extends Controller
     /**
      * Displays a form to edit an existing user entity.
      *
-     * @Route("/{id}/edit", name="user_edit")
+     * @Route("/user/{id}/edit", name="user_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, User $user)
@@ -108,7 +103,7 @@ class UserController extends Controller
     /**
      * Deletes a user entity.
      *
-     * @Route("/{id}", name="user_delete")
+     * @Route("/user/{id}", name="user_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, User $user)

@@ -30,11 +30,20 @@ security:
                 path:   /logout
                 target: /login
             anonymous: ~
+
+    role_hierarchy:
+            ROLE_MODERATOR:       ROLE_USER
+            ROLE_ADMIN: [ROLE_MODERATOR, ROLE_USER]
+
     access_control:
-            - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/reset_pass, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/input_new_password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/login, allow_if: "not has_role('ROLE_USER')" }
+            - { path: ^/register, allow_if: "not has_role('ROLE_USER')" }
+            - { path: ^/reset_pass, allow_if: "not has_role('ROLE_USER')" }
+            - { path: ^/input_new_password, allow_if: "not has_role('ROLE_USER')" }
+            - { path: ^/catalog, roles: ROLE_USER }
+            - { path: ^/product, roles: ROLE_MODERATOR }
+            - { path: ^/category, roles: ROLE_MODERATOR }
+            - { path: ^/user, roles: ROLE_MODERATOR }
 
 
 

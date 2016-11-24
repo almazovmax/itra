@@ -6,6 +6,7 @@ use ItraBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,13 +22,16 @@ class ProductController extends Controller
      * @Route("/", name="product_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         $products = $em->getRepository('ItraBundle:Product')->findAll();
 
         $serializer = $this->get('app.product_serialize')->serializer();
+        if($request->isXmlHttpRequest()) {
+            return new JsonResponse($serializer->serialize($products, 'json'));
+        }
 
         $tree = $serializer->serialize($products, 'json');
 

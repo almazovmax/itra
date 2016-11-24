@@ -30,6 +30,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 
         $em = $this->getEntityManager();
         $em->flush();
+        return true;
     }
 
     public function removeToken($user)

@@ -16,3 +16,10 @@ services:
 
     app.product_serialize:
         class: ItraBundle\Services\ProductSerializer
+
+    app.exception_listener:
+        class: ItraBundle\Services\RedirectUserListener
+        arguments:
+                    - "@router"
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }

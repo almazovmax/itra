@@ -36,7 +36,7 @@ class SecurityController extends Controller
         $form = $this->createForm(UserType::class);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if($form->isSubmitted()) {
             $token = md5($request->getContent());
             $email = $form['email']->getData();
             $username = $form['username']->getData();
@@ -88,8 +88,7 @@ class SecurityController extends Controller
         }
 
         if($form->isSubmitted() && $form->isValid()) {
-
-
+            $user->setPlainPassword($form->get('plainPassword')->getData());
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
