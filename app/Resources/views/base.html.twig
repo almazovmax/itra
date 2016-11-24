@@ -31,9 +31,15 @@
         <div class="header">
             <div class="col-md-9 header-left">
                 <div class="top-nav">
-
-                        {{ knp_menu_render('main', {'currentClass': 'active'}) }}
-
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {{ knp_menu_render('admin', {'currentClass': 'active'}) }}
+                    {% elseif is_granted('ROLE_MODERATOR') %}
+                        {{ knp_menu_render('moderator', {'currentClass': 'active'}) }}
+                    {% elseif is_granted('ROLE_USER') %}
+                        {{ knp_menu_render('user', {'currentClass': 'active'}) }}
+                    {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                        {{ knp_menu_render('guest', {'currentClass': 'active'}) }}
+                    {% endif %}
                 </div>
                 <div class="clearfix"> </div>
             </div>
@@ -52,7 +58,9 @@
     <div class="container">
         <div class="footer-top">
             <div class="col-md-6 footer-left">
-
+                {% if is_granted('ROLE_USER') %}
+                    <a class="btn btn-info" href="{{ path('logout') }}">Logout</a>
+                {% endif %}
             </div>
             <div class="col-md-6 footer-right">
                 <p>© 2016 ITRA. All Rights Reserved | Design by  <a href="http://vk.com/almazovmax" target="_blank">Max</a> </p>

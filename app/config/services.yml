@@ -12,7 +12,10 @@ services:
         class: ItraBundle\Services\MenuBuilder
         arguments: ["@knp_menu.factory", "@doctrine.orm.entity_manager"]
         tags:
-            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
+            - { name: knp_menu.menu_builder, method: createAdminMenu, alias: admin }
+            - { name: knp_menu.menu_builder, method: createModeratorMenu, alias: moderator }
+            - { name: knp_menu.menu_builder, method: createUserMenu, alias: user }
+            - { name: knp_menu.menu_builder, method: createGuestMenu, alias: guest }
 
     app.product_serialize:
         class: ItraBundle\Services\ProductSerializer
