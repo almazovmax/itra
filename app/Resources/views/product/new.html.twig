@@ -33,10 +33,10 @@
                                 'rows': 4,
                             }
                         }) }}
-                        {{ form_row(form.price) }}
                         {{ form_row(form.sku) }}
                     </div>
                     <div class="col-md-6 single-top-left">
+                        {{ form_row(form.price) }}
                         {{ form_row(form.dateCreate) }}
                         {{ form_row(form.dateUpdate) }}
                         <script type="text/javascript">
@@ -51,11 +51,6 @@
                                 });
                             });
                         </script>
-                        {{ form_row(form.relationWithMe, {
-                        'attr': {
-                            'class': 'form-control',
-                        }
-                        }) }}
                         {{ form_row(form.myRelation) }}
                         {{ form_row(form.isActive) }}
                         {{ form_row(form._token) }}

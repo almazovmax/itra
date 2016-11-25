@@ -4,6 +4,7 @@ namespace ItraBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use ItraBundle\Validator\Constraints as AcmeAssert;
 
 /**
  * @ORM\Entity
@@ -79,6 +80,7 @@ class Product
      *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="relation_product_id", referencedColumnName="id")}
      *      )
+     * @AcmeAssert\LimitRelationBetweenProduct
      */
     private $myRelation;
 

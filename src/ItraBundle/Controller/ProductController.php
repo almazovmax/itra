@@ -24,20 +24,18 @@ class ProductController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $products = $em->getRepository('ItraBundle:Product')->findAll();
+        $pagination = $this->pagination($request);
 
         $serializer = $this->get('app.product_serialize')->serializer();
         if($request->isXmlHttpRequest()) {
-            return new JsonResponse($serializer->serialize($products, 'json'));
+            return new JsonResponse($serializer->serialize($pagination, 'json'));
         }
 
-        $tree = $serializer->serialize($products, 'json');
+        $tree = $serializer->serialize($pagination, 'json');
 
         return $this->render('product/index.html.twig', array(
-            'products' => $products,
-            'tree' => $tree
+            'tree' => $tree,
+            'pagination' => $pagination,
         ));
     }
 
@@ -100,9 +98,13 @@ class ProductController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $file = $product->getImage();
+            $fileName = $this->get('app.images_uploader')->upload($file);
+            $product->setImage('images/'.$fileName);
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('product_edit', array('id' => $product->getId()));
+            return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
 
         return $this->render('product/edit.html.twig', array(
@@ -146,5 +148,18 @@ class ProductController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    public function pagination(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em
+            ->getRepository('ItraBundle:Product')
+            ->createQueryBuilder('u')
+            ->getQuery();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 6);
+
+        return $pagination;
     }
 }

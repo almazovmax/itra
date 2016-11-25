@@ -21,7 +21,10 @@
             <h2>Product list</h2>
         </div>
         <div class="account-main">
-            <table class="table table-hover">
+            <div class="col-md-3">
+                <a class="btn btn-info" href="{{ path('product_new') }}">Create a new product</a>
+            </div>
+            <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -36,7 +39,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for product in products %}
+                {% for product in pagination %}
                     <tr>
                         <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
                         <td>{{ product.name }}</td>
@@ -47,20 +50,18 @@
                         <td>{% if product.isActive %}Yes{% else %}No{% endif %}</td>
                         <td>{{ product.sku }}</td>
                         <td>
-                            <ul>
-                                <li>
-                                    <a href="{{ path('product_show', { 'id': product.id }) }}">show</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('product_edit', { 'id': product.id }) }}">edit</a>
-                                </li>
-                            </ul>
+                            <a href="{{ path('product_show', { 'id': product.id }) }}"><span class="glyphicon glyphicon-expand"></span></a>
+                            <a href="{{ path('product_edit', { 'id': product.id }) }}"><span class="glyphicon glyphicon-pencil"></span></a>
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <a class="btn btn-info" href="{{ path('product_new') }}">Create a new product</a>
+            <div class="pagenatin">
+                <nav>
+                    {{ knp_pagination_render(pagination) }}
+                </nav>
+            </div>
         </div>
     </div>
 </div>
