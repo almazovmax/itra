@@ -18,6 +18,7 @@ class ProductType extends AbstractType
     {
         $builder->add('name')
             ->add('description')
+            ->add('price')
             ->add('dateCreate', DateType::class, array(
                 'html5' => false,
                 'widget' => 'single_text',

@@ -36,6 +36,11 @@ class Product
     private $description;
 
     /**
+     * @ORM\Column(name="price", type="float", nullable=true)
+     */
+    private $price;
+
+    /**
      * @ORM\Column(name="date_create", type="date", length=100)
      */
     private $dateCreate;
@@ -140,6 +145,22 @@ class Product
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param mixed $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
     }
 
     /**

@@ -16,10 +16,21 @@
 
     {% block body %}
 
-
+        <!--start-breadcrumbs-->
+        <div class="breadcrumbs">
+            <div class="container">
+                <div class="breadcrumbs-main">
+                    <ol class="breadcrumb">
+                        <li><a href="{{ path('homepage') }}">Home</a></li>
+                        <li class="active">{{ product.category }} {{ product.name }} - Edit</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!--end-breadcrumbs-->
         <div class="single contact">
             <div class="account-top heading">
-                <h2>Product creation</h2>
+                <h2>Product edit</h2>
             </div>
             <div class="container">
                 <div class="single-main">
@@ -34,8 +45,8 @@
                                         'rows': 4,
                                     }
                                 }) }}
+                                {{ form_row(edit_form.price) }}
                                 {{ form_row(edit_form.sku) }}
-                                {{ form_row(edit_form.isActive) }}
                             </div>
                             <div class="col-md-6 single-top-left">
 
@@ -59,6 +70,7 @@
                                     }
                                 }) }}
                                 {{ form_row(edit_form.myRelation) }}
+                                {{ form_row(edit_form.isActive) }}
                                 {{ form_row(edit_form._token) }}
 
                             </div>
@@ -96,14 +108,17 @@
                                             <input class="btn btn-success" type="submit" value="Update" />
                                             {{ form_end(edit_form, {'render_rest': false}) }}
                                         </label>
+                                        <hr>
                                         <label>
                                             {{ form_start(delete_form) }}
                                             <input class="btn btn-danger" type="submit" value="Delete">
                                             {{ form_end(delete_form) }}
                                         </label>
+                                        <hr>
                                         <label>
                                             <a class="btn btn-info" href="{{ path('product_new') }}">Create new</a>
                                         </label>
+                                        <hr>
                                         <label>
                                             <a class="btn btn-warning" href="{{ path('product_index') }}">Back to the list</a>
                                         </label>

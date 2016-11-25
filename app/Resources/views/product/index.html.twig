@@ -27,10 +27,10 @@
                         <th>Id</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Price</th>
                         <th>Datecreate</th>
                         <th>Dateupdate</th>
                         <th>Isactiv</th>
-                        <th>Image</th>
                         <th>Sku</th>
                         <th>Actions</th>
                     </tr>
@@ -41,10 +41,10 @@
                         <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
                         <td>{{ product.name }}</td>
                         <td>{{ product.description }}</td>
+                        <td>{{ product.price }} $</td>
                         <td>{{ product.dateCreate.date|date("d M Y") }}</td>
                         <td>{% if product.dateUpdate %}{{ product.dateUpdate.date|date("d M Y") }}{% endif %}</td>
                         <td>{% if product.isActive %}Yes{% else %}No{% endif %}</td>
-                        <td>{{ product.image }}</td>
                         <td>{{ product.sku }}</td>
                         <td>
                             <ul>
@@ -61,7 +61,6 @@
                 </tbody>
             </table>
             <a class="btn btn-info" href="{{ path('product_new') }}">Create a new product</a>
-            {{ tree }}
         </div>
     </div>
 </div>
