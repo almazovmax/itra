@@ -1,13 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <!--start-breadcrumbs-->
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="breadcrumbs-main">
+                <ol class="breadcrumb">
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li class="active">Create new category</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!--end-breadcrumbs-->
     <div class="account">
         <div class="container">
             <div class="account-top heading">
                 <h2>Category creation</h2>
             </div>
             <div class="account-main">
-                <div class="col-md-6 account-left">
+                <div class="col-md-9 account-left">
                     <h3>Create new category</h3>
                     <div class="account-bottom">
                         {{ form_start(form, {
@@ -38,19 +50,28 @@
                                 }
                                 }) }}
                         </div>
-                        <div class="address">
-                            <input type="submit" value="Create" />
-                        </div>
-                        {{ form_rest(form) }}
                     </div>
                 </div>
-
-                <div class="col-md-6 account-right account-left">
-                    <h3>Recommended</h3>
-                    <p>Enter name of category, choice parent category and something else, for example lorem ipsum dolor sit. If you don't want create new category, you can back to the list</p>
-                    <a href="{{ path('category_index') }}">Back to the list</a>
+                <div class="col-md-3 single-right">
+                    <div class="w_sidebar">
+                        <section  class="sky-form">
+                            <h4>Action</h4>
+                            <div class="row1 row2 scroll-pane">
+                                <div class="col col-4">
+                                    <label>
+                                        <input class="btn btn-success" type="submit" value="Create" />
+                                        {{ form_rest(form) }}
+                                    </label>
+                                    <hr>
+                                    <label>
+                                        <a class="btn btn-info" href="{{ path('product_index') }}">Back to the list</a>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
                 </div>
-                <div class="clearfix"></div>
+                <div class="clearfix"> </div>
             </div>
         </div>
     </div>

@@ -20,6 +20,9 @@ services:
     app.product_serialize:
         class: ItraBundle\Services\ProductSerializer
 
+    app.category_serialize:
+        class: ItraBundle\Services\CategorySerializer
+
     #app.exception_listener:
     #    class: ItraBundle\Services\RedirectUserListener
     #    arguments:

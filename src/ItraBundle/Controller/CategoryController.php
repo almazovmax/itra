@@ -31,16 +31,9 @@ class CategoryController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $categories = $em->getRepository('ItraBundle:Category')->findBy(array('parent' => null));
+        $categories = $em->getRepository('ItraBundle:Category')->findALL();
 
-        $encoders = array(new JsonEncoder());
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-        $normalizer = new ObjectNormalizer($classMetadataFactory);
-        $normalizer->setCircularReferenceHandler(function ($object) {
-            return $object->getId();
-        });
-
-        $serializer = new Serializer(array($normalizer), $encoders);
+        $serializer = $this->get('app.category_serialize')->serializer();
 
         $tree = $serializer->serialize($categories, 'json', array('groups' => array('category')));
 
@@ -107,7 +100,7 @@ class CategoryController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('category_edit', array('id' => $category->getId()));
+            return $this->redirectToRoute('category_show', array('id' => $category->getId()));
         }
 
         return $this->render('category/edit.html.twig', array(
