@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserController extends Controller
 {
@@ -20,7 +21,6 @@ class UserController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $users = $em->getRepository('ItraBundle:User')->findAll();
 
         return $this->render('user/index.html.twig', array(
@@ -45,10 +45,13 @@ class UserController extends Controller
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->setRole('ROLE_USER');
+            $user->setIsActive(true);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            $this->setFlash('Registration completed successfully. You can log in using your username and password.');
 
             return $this->redirectToRoute('login');
         }
@@ -56,22 +59,6 @@ class UserController extends Controller
         return $this->render('ItraBundle:Page:register.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a user entity.
-     *
-     * @Route("/user/{id}", name="user_show")
-     * @Method("GET")
-     */
-    public function showAction(User $user)
-    {
-        $deleteForm = $this->createDeleteForm($user);
-
-        return $this->render('user/show.html.twig', array(
-            'user' => $user,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -90,7 +77,7 @@ class UserController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
+            return $this->redirectToRoute('user_index');
         }
 
         return $this->render('user/edit.html.twig', array(
@@ -134,5 +121,14 @@ class UserController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    private function setFlash($message)
+    {
+        $session = new Session();
+
+        return $session
+            ->getFlashBag()
+            ->add('Reset', $message);
     }
 }

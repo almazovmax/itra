@@ -28,6 +28,16 @@ class User implements UserInterface, \Serializable
     private $username;
 
     /**
+     * @ORM\Column(name="first_name", type="string", length=255)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(name="last_name", type="string", length=255)
+     */
+    private $lastName;
+
+    /**
      * @ORM\Column(type="string", length=64)
      */
     private $password;
@@ -42,7 +52,7 @@ class User implements UserInterface, \Serializable
     private $email;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="is_active", type="boolean", nullable=true)
      */
     private $isActive;
 
@@ -61,7 +71,6 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->role = new ArrayCollection();
-        $this->isActive = true;
     }
 
     /**
@@ -91,6 +100,38 @@ class User implements UserInterface, \Serializable
     public function setUsername($username)
     {
         $this->username = $username;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
     }
 
     /**

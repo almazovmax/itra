@@ -1,5 +1,5 @@
 {% extends "::base.html.twig" %}
-
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 {% block body %}
 <!--start-breadcrumbs-->
 <div class="breadcrumbs">
@@ -27,17 +27,23 @@
             <div class="col-md-6 account-left">
             {{ form_row(form.username, {
                 'attr': {
-                    'class': 'form-control',
-                    'placeholder': 'Name'
+                    'placeholder': 'Login'
                 },
                 'label_attr': {
                     'class': 'sr-only'
                 }
             }) }}
-            {{ form_row(form.email, {
+            {{ form_row(form.firstName, {
                 'attr': {
-                    'class': 'form-control',
-                    'placeholder': 'Email'
+                    'placeholder': 'First name'
+                },
+                'label_attr': {
+                    'class': 'sr-only'
+                }
+            }) }}
+            {{ form_row(form.lastName, {
+                'attr': {
+                    'placeholder': 'Last name'
                 },
                 'label_attr': {
                     'class': 'sr-only'
@@ -45,10 +51,17 @@
             }) }}
             </div>
             <div class="col-md-6 account-left">
+            {{ form_row(form.email, {
+                'attr': {
+                    'placeholder': 'Email'
+                },
+                'label_attr': {
+                    'class': 'sr-only'
+                }
+            }) }}
             {{ form_row(form.plainPassword.first, {
                 'label': 'Password',
                 'attr': {
-                    'class': 'form-control',
                     'placeholder': 'Password'
                 },
                 'label_attr': {
@@ -58,7 +71,6 @@
             {{ form_row(form.plainPassword.second, {
                 'label': 'Password',
                 'attr': {
-                    'class': 'form-control',
                     'placeholder': 'Repeat Password'
                 },
                 'label_attr': {

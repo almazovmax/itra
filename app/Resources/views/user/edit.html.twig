@@ -2,25 +2,67 @@
 {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
 
 {% block body %}
-    <h1>User edit</h1>
-
-    {{ form_start(edit_form) }}
-    {{ form_errors(edit_form) }}
-    {{ form_row(edit_form.username) }}
-    {{ form_row(edit_form.email) }}
-    {{ form_row(edit_form.role) }}
-    {{ form_row(edit_form._token) }}
-        <input class="btn btn-success" type="submit" name="submit" value="Edit">
-    {{ form_end(edit_form, {'render_rest': false}) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('user_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+<!--start-breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="breadcrumbs-main">
+            <ol class="breadcrumb">
+                <li><a href="">Home</a></li>
+                <li class="active">User {{ user.firstName }} {{ user.lastName }} - Edit</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<!--end-breadcrumbs-->
+<div class="account">
+    <div class="container">
+        <div class="account-main">
+            <div class="account-top heading">
+                <h2>User edit</h2>
+            </div>
+            <div class="col-md-9 account-left">
+                <div class="account-bottom">
+                    {{ form_start(edit_form) }}
+                    {{ form_errors(edit_form) }}
+                    {{ form_row(edit_form.username) }}
+                    {{ form_row(edit_form.firstName) }}
+                    {{ form_row(edit_form.lastName) }}
+                    {{ form_row(edit_form.email) }}
+                    {{ form_row(edit_form.role) }}
+                    {{ form_row(edit_form.isActive) }}
+                    {{ form_row(edit_form._token) }}
+                </div>
+            </div>
+            <div class="col-md-3 single-right">
+                <div class="w_sidebar">
+                    <section  class="sky-form">
+                        <h4>Action</h4>
+                        <div class="row1 row2 scroll-pane">
+                            <div class="col col-4">
+                                <label>
+                                    <input class="btn btn-warning" type="submit" name="submit" value="Edit">
+                                    {{ form_end(edit_form, {'render_rest': false}) }}
+                                </label>
+                                <hr>
+                                <label>
+                                    {{ form_start(delete_form) }}
+                                    <input class="btn btn-danger" type="submit" value="Delete">
+                                    {{ form_end(delete_form) }}
+                                </label>
+                                <hr>
+                                <label>
+                                    <a class="btn btn-info" href="{{ path('user_index') }}">Back to the list</a>
+                                </label>
+                                <hr>
+                                <label>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    <div>
+<div>
 {% endblock %}
