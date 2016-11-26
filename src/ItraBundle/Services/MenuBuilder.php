@@ -28,6 +28,7 @@ class MenuBuilder
         $menu->addChild('Product', array('route' => 'product_index', 'attributes' => array('class' => 'grid')));
         $menu->addChild('Category', array('route' => 'category_index', 'attributes' => array('class' => 'grid')));
         $menu->addChild('Login', array('route' => 'login', 'attributes' => array('class' => 'grid')));
+        $menu->addChild('User', array('route' => 'user_index', 'attributes' => array('class' => 'grid')));
 
         return $menu;
     }

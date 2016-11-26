@@ -12,6 +12,12 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('ItraBundle:Page:homepage.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $products = $em->getRepository('ItraBundle:Product')->findBy(array(), array('id' => 'DESC'), 8);
+
+        return $this->render('ItraBundle:Page:homepage.html.twig', array(
+            'products' => $products,
+        ));
     }
 }

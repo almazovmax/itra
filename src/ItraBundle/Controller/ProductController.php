@@ -5,7 +5,9 @@ namespace ItraBundle\Controller;
 use ItraBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Product controller.
@@ -18,17 +20,43 @@ class ProductController extends Controller
      * Lists all product entities.
      *
      * @Route("/", name="product_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         $products = $em->getRepository('ItraBundle:Product')->findAll();
 
+        $serializer = $this->get('app.product_serialize')->serializer();
+
+        if($request->isXmlHttpRequest()) {
+            return new JsonResponse($serializer->serialize($products, 'json'));
+        }
+
+        $tree = $serializer->serialize($products, 'json');
+
         return $this->render('product/index.html.twig', array(
             'products' => $products,
+            'tree' => $tree
         ));
+    }
+
+    /**
+     * Lists all product entities.
+     *
+     * @Route("/ajax", name="product_list_ajax")
+     * @Method("GET")
+     */
+    public function ajaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $products = $em->getRepository('ItraBundle:Product')->findAll();
+            $serializer = $this->get('app.product_serialize')->serializer();
+
+            return new JsonResponse($serializer->serialize($products, 'json'));
+        }
     }
 
     /**

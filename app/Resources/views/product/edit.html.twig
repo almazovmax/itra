@@ -4,15 +4,18 @@
         {{ parent() }}
         <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.ru.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap.file_input.js') }}"></script>
     {% endblock %}
 
     {% block stylesheet %}
         {{ parent() }}
         <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet" type="text/css" media="all" />
         <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ asset('css/bootstrap.file_input.css') }}" rel="stylesheet" type="text/css" media="all" />
     {% endblock %}
 
     {% block body %}
+
 
         <div class="single contact">
             <div class="account-top heading">
@@ -22,69 +25,66 @@
                 <div class="single-main">
                     <div class="col-md-9 single-main-left">
                         <div class="sngl-top">
-                            <div class="col-md-5 single-top-left">
-                                {{ form_start(edit_form, {
-                                    'attr': {
-                                        'class': '',
-                                    }
-                                }) }}
-                                {{ form_row(edit_form.name, {
-                                    'attr': {
-                                        'class': 'form-control',
-                                    }
-                                }) }}
-                                {{ form_row(edit_form.category, {
-                                    'attr': {
-                                        'class': 'form-control',
-                                    }
-                                }) }}
+                            <div class="col-md-6 single-top-left">
+                                {{ form_start(edit_form) }}
+                                {{ form_row(edit_form.name) }}
+                                {{ form_row(edit_form.category) }}
                                 {{ form_row(edit_form.description, {
                                     'attr': {
-                                        'class': 'form-control',
+                                        'rows': 4,
                                     }
                                 }) }}
-                                {{ form_row(edit_form.sku, {
-                                    'attr': {
-                                        'class': 'form-control',
-                                    }
-                                }) }}
-                                {{ form_row(edit_form.isActiv, {
-                                    'attr': {
-                                        'class': 'checkbox',
-                                    }
-                                }) }}
+                                {{ form_row(edit_form.sku) }}
+                                {{ form_row(edit_form.isActive) }}
                             </div>
-                            <div class="col-md-5 single-top-left">
+                            <div class="col-md-6 single-top-left">
 
-
+                                {{ form_row(edit_form.dateCreate) }}
                                 {{ form_row(edit_form.dateUpdate) }}
                                 <script type="text/javascript">
                                     $(function () {
                                         $('.datepicker').datepicker({
                                             format: "dd.mm.yyyy",
                                             todayBtn: "linked",
-                                            language: "ru",
+                                            language: "en",
                                             autoclose: true,
-                                            locale: "ru",
+                                            locale: "en",
                                             todayHighlight: true
                                         });
                                     });
                                 </script>
-                                {{ form_row(edit_form.image) }}
                                 {{ form_row(edit_form.relationWithMe, {
                                     'attr': {
                                         'class': 'form-control',
                                     }
                                 }) }}
-                                {{ form_row(edit_form.myRelation, {
-                                    'attr': {
-                                        'class': 'form-control',
-                                    }
-                                }) }}
+                                {{ form_row(edit_form.myRelation) }}
                                 {{ form_row(edit_form._token) }}
 
                             </div>
                         </div>
+
+                        <!-- image-preview-filename input [CUT FROM HERE]-->
+                        <div class="input-group image-preview">
+                            <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+                        <!-- image-preview-clear button -->
+                        <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                            <span class="glyphicon glyphicon-remove"></span> Clear
+                        </button>
+                                <!-- image-preview-input -->
+                        <div class="btn btn-default image-preview-input">
+                            <span class="glyphicon glyphicon-folder-open"></span>
+                            <span class="image-preview-input-title">Browse</span>
+                            {{ form_row(edit_form.image, {
+                                'label_attr':{
+                                    'class': 'sr-only'
+                                }
+                            }) }} <!-- rename it -->
+                        </div>
+                        </span>
+                        </div><!-- /input-group image-preview [TO HERE]-->
+
                     </div>
                     <div class="col-md-3 single-right">
                         <div class="w_sidebar">

@@ -48,7 +48,7 @@ class Product
     /**
      * @ORM\Column(name="is_active", type="boolean", nullable=true)
      */
-    private $isActiv;
+    private $isActive;
 
     /**
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
@@ -177,17 +177,17 @@ class Product
     /**
      * @return mixed
      */
-    public function getIsActiv()
+    public function getIsActive()
     {
-        return $this->isActiv;
+        return $this->isActive;
     }
 
     /**
-     * @param mixed $isActiv
+     * @param mixed $isActive
      */
-    public function setIsActiv($isActiv)
+    public function setIsActive($isActive)
     {
-        $this->isActiv = $isActiv;
+        $this->isActive = $isActive;
     }
 
     /**

@@ -54,7 +54,7 @@
                             <div class="row1 scroll-pane">
                                 <div class="col col-4">
                                     {% macro recursiveCategory(category) %}
-                                        <li class="li" data-id="{{ category.id }}">
+                                        <li id="li" data-id="{{ category.id }}">
                                             <a href="{{ path('category_show', { 'id': category.id }) }}">{{ category }}</a>
 
                                             {% if category.children|length %}

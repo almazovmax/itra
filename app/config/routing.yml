@@ -1,3 +1,6 @@
 app:
     resource: "@ItraBundle/Controller/"
     type:     annotation
+
+logout:
+   path: /logout

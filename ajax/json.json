@@ -1,0 +1,115 @@
+[
+  {
+    "id":1,
+    "category":"Tissot",
+    "name":"Vintage",
+    "description":"Watches Tissot Vintage",
+    "date_create":"12.11.2013",
+    "date_update":"01-01-2016",
+    "is_active":true,
+    "sku":"111587",
+    "my_relation":
+    [
+      {
+        "id":2,
+        "name":"TRADITION"
+      },
+      {
+        "id":3,
+        "name":"Some watch"
+      },
+      {
+        "id":7,
+        "name":"Name watches"
+      }
+    ]
+  },
+  {
+    "id":2,
+    "category":"Tissot",
+    "name":"TRADITION",
+    "description":"Tissot Tradition so good ulalala",
+    "date_create":"11.07.2012",
+    "date_update":null,
+    "is_active":true,
+    "sku":"1654162563526",
+    "my_relation":[]
+  },
+  {
+    "id":3,
+    "category":"Rado",
+    "name":"Some watch",
+    "description":"Description",
+    "date_create":"01.01.2011",
+    "date_update":null,
+    "is_active":true,
+    "sku":"564531",
+    "my_relation":[]
+  },
+  {
+    "id":4,
+    "category":"Rado",
+    "name":"Perfect",
+    "description":"Description Perfect",
+    "date_create":"01.01.2011",
+    "date_update":null,
+    "is_active":true,
+    "sku":"5345634516",
+    "my_relation":[]
+  },
+  {
+    "id":5,
+    "category":"Rado",
+    "name":"Great",
+    "description":"Description Perfect",
+    "date_create":"01.01.2011",
+    "date_update":null,
+    "is_active":true,
+    "sku":"5345634516",
+    "my_relation":[]
+  },
+  {
+    "id":6,
+    "category":"Tissot",
+    "name":"TISSOT LADY QUARTZ",
+    "description":"Desc",
+    "date_create":"01.01.2011",
+    "date_update":null,
+    "is_active":true,
+    "sku":"4524636534653",
+    "my_relation":[]
+  },
+  {
+    "id":7,
+    "category":"Tissot",
+    "name":"Name watches",
+    "description":"sdgnsfmnsfhmshjmsfdl;ijbsml gfs;lf mn'ds,n",
+    "date_create":"10.11.2016",
+    "date_update":null,
+    "is_active":true,
+    "sku":"3681649841261465",
+    "my_relation":[]
+  },
+  {
+    "id":8,
+    "category":"Rado",
+    "name":"vgmh",
+    "description":"vhvmhjg",
+    "date_create":"24.11.2016",
+    "date_update":null,
+    "is_active":true,
+    "sku":"452353256",
+    "my_relation":[]
+  },
+  {
+    "id":9,
+    "category":"Tissot",
+    "name":"imagecool",
+    "description":"wrtsybrtyhhdrejedgeshrtsth",
+    "date_create":"15.11.2016",
+    "date_update":null,
+    "is_active":true,
+    "sku":"56245365",
+    "my_relation":[]
+  }
+]
