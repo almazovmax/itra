@@ -14,11 +14,11 @@ class ProductNormalizer implements NormalizerInterface
             'category'           => $object->getCategory()->getName(),
             'name'               => $object->getName(),
             'description'        => $object->getDescription(),
-            'date_create'        => date('d.m.Y', $object->getDateCreate()->getTimestamp()),
-            'date_update'        => $object->getDateUpdate() ? date('d-m-Y', $object->getDateUpdate()->getTimestamp()) : null,
-            'is_active'          => $object->getIsActive(),
+            'dateCreate'        => date('d.m.Y', $object->getDateCreate()->getTimestamp()),
+            'dateUpdate'        => $object->getDateUpdate() ? date('d-m-Y', $object->getDateUpdate()->getTimestamp()) : null,
+            'isActive'          => $object->getIsActive(),
             'sku'                => $object->getSku(),
-            'my_relation'        => array_map(
+            'myRelation'        => array_map(
                 function ($object){
                     return $this->normalizeRelation($object);
                 },

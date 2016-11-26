@@ -27,9 +27,6 @@ class ProductController extends Controller
         $pagination = $this->pagination($request);
 
         $serializer = $this->get('app.product_serialize')->serializer();
-        if($request->isXmlHttpRequest()) {
-            return new JsonResponse($serializer->serialize($pagination, 'json'));
-        }
 
         $tree = $serializer->serialize($pagination, 'json');
 
@@ -47,8 +44,13 @@ class ProductController extends Controller
      */
     public function ajaxAction(Request $request)
     {
+        //var_dump($request); die;
+
+
+
+
         if($request->isXmlHttpRequest()) {
-            $pagination = $this->pagination($request);
+            $pagination = $this->paginationAjax($request);
             $serializer = $this->get('app.product_serialize')->serializer();
 
             return new JsonResponse($serializer->serialize($pagination, 'json'));
@@ -173,6 +175,36 @@ class ProductController extends Controller
             ->getRepository('ItraBundle:Product')
             ->createQueryBuilder('u')
             ->getQuery();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 6);
+
+        return $pagination;
+    }
+
+    public function paginationAjax(Request $request)
+    {
+
+        $sortByField = $request->get('sortbyfield');
+        $orderBy = $request->get('order');
+        $filterByField = $request->get('filterbyfield');
+        $pattern = $request->get('pattern');
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em
+            ->getRepository('ItraBundle:Product')
+            ->createQueryBuilder('u');
+
+        if($pattern){
+            $query = $qb
+                ->where($qb->expr()->like('u.'.$filterByField, ':pattern'))
+                ->setParameter('pattern', '%'.$pattern.'%')
+                ->orderBy('u.'.$sortByField, $orderBy)
+                ->getQuery();
+        } else {
+            $query = $qb
+                ->orderBy('u.'.$sortByField, $orderBy)
+                ->getQuery();
+        }
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 6);
 

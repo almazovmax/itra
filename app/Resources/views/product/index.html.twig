@@ -46,15 +46,16 @@
                     $("#entities-grid").ajaxGrid();
                 });
                 $("#entities-grid").on("keyup",".filter",function () {
-                    settings.filterbyfield=this.id;
+                    settings.filterbyfield=this.parentElement.id;
                     settings.pattern=this.value;
                     settings.dataURL=generateURL();
                     console.log(settings);
                     $("#entities-grid").ajaxGrid('update',{'dataURL':settings.dataURL});
                 });
-                $("#entities-grid").on("click",".sortableColumn",function () {
-                    settings.sortbyfield=this.id;
-                    settings.order=!settings.order;
+                $("#entities-grid").on("click",".sort",function () {
+                    settings.sortbyfield=this.parentElement.id;
+                    if(settings.order=="asc"){settings.order="desc"}
+                    else {settings.order="asc"}
                     settings.dataURL=generateURL();
                     console.log(settings);
                     $("#entities-grid").ajaxGrid('update',{'dataURL':settings.dataURL});

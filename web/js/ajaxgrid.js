@@ -1,7 +1,11 @@
+/**
+ * Created by 31.75 on 18.11.2016.
+ */
+
 (function( $ ) {
     var settings =  {
-        'dataURL'          : 'http://127.0.0.1:8000/product/ajax',
-        'sortableColumns'  : '[“id”, “name”, “date_create”]',
+        'dataURL'          : 'http://127.0.0.1:8000/product/ajax?sortbyfield=id&order=asc&filterbyfield=&pattern=',
+        'sortableColumns'  : '[“id”, “name”, “dateCreate”]',
         'filterableColumns': '[“name”]',
         'rowsPerPage'      : '20'
     };
@@ -23,20 +27,18 @@
                 function createTable(response)
                 {
                     var c = [];
-                    //c.push("<table class='sortable table table-hover'>");
                     c+=("<thead class='dataColumns'>");
                     for(var prop in response[0])
                     {
                         if(response[0].hasOwnProperty(prop))
                         {
                             if((options.filterableColumns.includes(prop))&&(options.sortableColumns.includes(prop))){
-                                c+=("<th class='sortableColumn filterableColumn'>" + "<input class='filter' id='"+prop+"' placeholder='Type to filter'>"+"<br/>"+prop+ "</th>");
+                                c+=("<th class='filterableColumn sortableColumn'"+"id='"+prop+"'>" + "<input class='filter' placeholder='Type to filter'>"+"<br/>"+prop+"<buttom style='float: right' class='sort btn btn-info btn-xs'><span class='glyphicon glyphicon-resize-vertical'></span></buttom>"+ "</th>");
                             }
                             else if(options.sortableColumns.includes(prop)){
-                                c+=("<th class='sortableColumn'"+"id='"+prop+"'>" + prop + "</th>");
+                                c+=("<th class='sortableColumn'"+"id='"+prop+"'>" +prop+"<buttom style='float: right' class='sort btn btn-info btn-xs'><span class='glyphicon glyphicon-resize-vertical'></span></buttom>" + "</th>");
                             }else if (options.filterableColumns.includes(prop)){
                                 c+=("<th class='filterableColumn'>" +"<input class='filter' id='"+prop+"' placeholder='Type to filter'>"+"<br/>"+prop+"</th>");
-                                //this.getElementById('searchInput').id=prop;
                             }else
                                 c+=("<th>" + prop + "</th>");
                         }
@@ -87,8 +89,8 @@
                 }
             }
             var options = $.extend({}, settings, params);
-            $("#dataRows").remove();
             $.getJSON(options.dataURL,function (data) {
+                $("#dataRows").remove();
                 function createTable(response)
                 {
                     var c = [];
