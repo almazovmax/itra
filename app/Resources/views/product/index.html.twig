@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
-
+{% block javascripts %}
+    {{parent()}}
+    <script src="{{ asset('js/ajaxgrid.js') }}" type="text/javascript"></script>
+{% endblock %}
 {% block body %}
 
 <!--start-breadcrumbs-->
@@ -24,44 +27,49 @@
             <div class="col-md-3">
                 <a class="btn btn-info" href="{{ path('product_new') }}">Create a new product</a>
             </div>
-            <table class="table table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Datecreate</th>
-                        <th>Dateupdate</th>
-                        <th>Isactiv</th>
-                        <th>Sku</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for product in pagination %}
-                    <tr>
-                        <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
-                        <td>{{ product.name }}</td>
-                        <td>{{ product.description }}</td>
-                        <td>{{ product.price }} $</td>
-                        <td>{{ product.dateCreate.date|date("d M Y") }}</td>
-                        <td>{% if product.dateUpdate %}{{ product.dateUpdate.date|date("d M Y") }}{% endif %}</td>
-                        <td>{% if product.isActive %}Yes{% else %}No{% endif %}</td>
-                        <td>{{ product.sku }}</td>
-                        <td>
-                            <a href="{{ path('product_show', { 'id': product.id }) }}"><span class="glyphicon glyphicon-expand"></span></a>
-                            <a href="{{ path('product_edit', { 'id': product.id }) }}"><span class="glyphicon glyphicon-pencil"></span></a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div id="entities-grid"></div>
             <div class="pagenatin">
                 <nav>
                     {{ knp_pagination_render(pagination) }}
                 </nav>
             </div>
+            <script type="text/javascript">
+                var settings= {
+                    'dataURL':'http://127.0.0.1:8000/product/',
+                    'sortbyfield': 'id',
+                    'order': 'asc',
+                    'filterbyfield': 'null',
+                    'pattern': 'null',
+                    'page': '1'
+                }
+                document.addEventListener("DOMContentLoaded", function() {
+                    $("#entities-grid").ajaxGrid();
+                });
+                $("#entities-grid").on("keyup",".filter",function () {
+                    settings.filterbyfield=this.id;
+                    settings.pattern=this.value;
+                    settings.dataURL=generateURL();
+                    console.log(settings);
+                    $("#entities-grid").ajaxGrid('update',{'dataURL':settings.dataURL});
+                });
+                $("#entities-grid").on("click",".sortableColumn",function () {
+                    settings.sortbyfield=this.id;
+                    settings.order=!settings.order;
+                    settings.dataURL=generateURL();
+                    console.log(settings);
+                    $("#entities-grid").ajaxGrid('update',{'dataURL':settings.dataURL});
+                });
+                function next() {
+                    //...
+                }
+                function previous() {
+                    //...
+                }
+                function generateURL(){
+                    return "http://127.0.0.1:8000/product/ajax?sortbyfield="+settings.sortbyfield+"&order="+settings.order+
+                            "&filterbyfield="+settings.filterbyfield+"&pattern="+settings.pattern+"&page="+settings.page;
+                }
+            </script>
         </div>
     </div>
 </div>

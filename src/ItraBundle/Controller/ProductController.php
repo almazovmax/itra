@@ -40,6 +40,22 @@ class ProductController extends Controller
     }
 
     /**
+     * Lists all product entities.
+     *
+     * @Route("/ajax", name="product_list_ajax")
+     * @Method("GET")
+     */
+    public function ajaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest()) {
+            $pagination = $this->pagination($request);
+            $serializer = $this->get('app.product_serialize')->serializer();
+
+            return new JsonResponse($serializer->serialize($pagination, 'json'));
+        }
+    }
+
+    /**
      * Creates a new product entity.
      *
      * @Route("/new", name="product_new")

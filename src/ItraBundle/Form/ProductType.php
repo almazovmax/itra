@@ -32,7 +32,7 @@ class ProductType extends AbstractType
                 'attr' => ['class' => 'datepicker'],
             ))
             ->add('isActive', CheckboxType::class, array('required' => false))
-            ->add('image', FileType::class, array('data_class' => null, 'label' => false, 'required' => false,))
+            ->add('image', FileType::class, array('data_class' => null, 'label' => false))
             ->add('sku')
             ->add('category')
             ->add('myRelation');
