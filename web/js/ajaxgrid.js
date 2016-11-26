@@ -3,96 +3,131 @@
  */
 
 (function( $ ) {
-        var settings = $.extend( {
-            'dataUrl'          : 'http://127.0.0.1:8000/product',
+        var settings =  {
+            'dataURL'          : 'http://127.0.0.1:8000/product/ajax',
             'sortableColumns'  : '[“id”, “title”, “created_date”]',
-            'filterableColumns': '[“id”, “title”]',
+            'filterableColumns': '[“name”]',
             'rowsPerPage'      : '20'
-        });
-
+        };
         var methods = {
             init : function( params ) {
+                function getURL(obj,mark) {
+                switch (mark) {
+                    case '1':
+                        return "<a href=" + window.location.href + obj.id + "/edit>" + "<span class='glyphicon glyphicon-pencil'></span>" + "";
+                        break;
+                    default:
+                        return "<a href=" + window.location.href + obj.id + ">" + obj.name + "</a>";
+                        break;
+                }
+                }
                 var options = $.extend({}, settings, params);
-                $("#entities-grid").append("<p>'It finally works!'</p>")
-                //$.getJSON(options.dataUrl,function (data) {
+                var buffDOM=this;
+                $.getJSON(options.dataURL,function (data) {
                     function createTable(response)
                     {
                         var c = [];
                         //c.push("<table class='sortable table table-hover'>");
-                        c.push("<thead class='dataColumns'>");
-                        for(var prop in response)
+                        c+=("<thead class='dataColumns'>");
+                        for(var prop in response[0])
                         {
-                            if(response.hasOwnProperty(prop))
+                            if(response[0].hasOwnProperty(prop))
                             {
                                 if((options.filterableColumns.includes(prop))&&(options.sortableColumns.includes(prop))){
-                                    c.push("<th class='sortableColumn filterableColumns'>" + prop + "<input id='searchInput' placeholder='Type to filter'>"+ "</th>");
-                                    this.getElementById('searchInput').id=prop;
+                                    c+=("<th class='sortableColumn filterableColumn'>" + "<input class='filter' id='"+prop+"' placeholder='Type to filter'>"+"<br/>"+prop+ "</th>");
                                 }
                                 else if(options.sortableColumns.includes(prop)){
-                                    c.push("<th class='sortableColumn'>" + prop + "</th>");
+                                    c+=("<th class='sortableColumn'"+"id='"+prop+"'>" + prop + "</th>");
                                 }else if (options.filterableColumns.includes(prop)){
-                                    c.push("<th class='filterableColumns'>" + prop + "<input id='searchInput' placeholder='Type to filter'>"+"</th>");
-                                    this.getElementById('searchInput').id=prop;
-                                }
-                                else
-                                    c.push("<th>" + prop + "</th>");
+                                    c+=("<th class='filterableColumn'>" +"<input class='filter' id='"+prop+"' placeholder='Type to filter'>"+"<br/>"+prop+"</th>");
+                                    //this.getElementById('searchInput').id=prop;
+                                }else
+                                    c+=("<th>" + prop + "</th>");
                             }
                         }
-                        c.push("</thead>");
-                        c.push("<tbody id='dataRows'>");
-                        $.each(response, function()
-                            {
-                                c.push("<tr>");
-                                for(var prop in response)
+                        c+=("<th>Edit</th>");
+                        c+=("</thead>");
+                        c+=("<tbody id='dataRows'>");
+
+
+                                for (var prop in response)
                                 {
-                                    if(response.hasOwnProperty(prop))
-                                        c.push("<td>"+response[prop]+"</td>");
+                                    c+=("<tr>");
+                                    for(var objProp in response[[prop]])
+                                    {
+                                        if(response[prop].hasOwnProperty(objProp))
+                                            if(Array.isArray(response[prop][objProp])){
+                                                var cellCode=[];
+                                                for (var el in response[prop][objProp]) {
+                                                    cellCode+=(getURL(response[prop][objProp][el]));
+                                                    cellCode+=("<br/>");
+                                                }
+                                                c+=("<td>"+cellCode+"</td>");
+                                            }else if (objProp=="name"){
+                                                c+=("<td>"+getURL(response[prop])+"</td>");
+                                            }else
+                                            c+=("<td>"+response[prop][objProp]+"</td>");
+                                    }
+                                c+=("<td>"+getURL(response[prop],"1")+"</td>");
+                                c+=("</tr>");
                                 }
-                                c.push("</tr>");
-                            }
-                        );
-                        c.push("</tbody>");
-                       // c.push("</table>");
-                       //  c.push("<div id='paging'>"+"Showing"+"<span id='begin'>"+"</span>"+"-"+"<span id='end'>"+
-                       //  "</span>"+"of"+"<span id='size'>"+"</span>"+"<input id='last' class='btn' type='Button' value='Last' onclick='javascript:last()' />"+
-                       //  "<input id='next' class='btn' type='button' value='Next' onclick='javascript:next()'/>"+"</div>");
+                        c+=("</tbody>");
                         return c;
                     }
-                    var jsontext = '{"firstname":"Jesper","surname":"Aaberg","phone":["555-0100","555-0120"]}';
-                    var response = $.parseJSON(jsontext);
+                    var response = $.parseJSON(data);
                     var c=createTable(response);
-                    $("#entities-grid").append("<table class='sortable table table-hover'>"+c+"</table>");
-                //})
+                    $(buffDOM).append("<table class='sortable table table-hover'>"+c+"</table>");
+                })
             },
             update : function( params ) {
+                function getURL(obj,mark) {
+                    switch (mark) {
+                        case '1':
+                            return "<a href=" + window.location.href + obj.id + "/edit>" + "<span class='glyphicon glyphicon-pencil'></span>" + "";
+                            break;
+                        default:
+                            return "<a href=" + window.location.href + obj.id + ">" + obj.name + "</a>";
+                            break;
+                    }
+                }
                 var options = $.extend({}, settings, params);
-                $.getJSON(options.dataUrl,function (data) {
+                $("#dataRows").remove();
+                $.getJSON(options.dataURL,function (data) {
                     function createTable(response)
                     {
                         var c = [];
-                        c.push("<tbody id='dataRows'>");
-                        $.each(response, function()
+                        c+=("<tbody id='dataRows'>");
+                        for (var prop in response)
+                        {
+                            c+=("<tr>");
+                            for(var objProp in response[[prop]])
                             {
-                                c.push("<tr>");
-                                for(var prop in response)
-                                {
-                                    if(response.hasOwnProperty(prop))
-                                        c.push("<td>"+response[prop]+"</td>");
-                                }
-                                c.push("</tr>");
+                                if(response[prop].hasOwnProperty(objProp))
+                                    if(Array.isArray(response[prop][objProp])){
+                                        var cellCode=[];
+                                        for (var el in response[prop][objProp]) {
+                                            cellCode+=(getURL(response[prop][objProp][el]));
+                                            cellCode+=("<br/>");
+                                        }
+                                        c+=("<td>"+cellCode+"</td>");
+                                    }else if (objProp=="name"){
+                                        c+=("<td>"+getURL(response[prop])+"</td>");
+                                    }else
+                                        c+=("<td>"+response[prop][objProp]+"</td>");
                             }
-                        );
-                        c.push("</tbody>");
+                            c+=("<td>"+getURL(response[prop],"1")+"</td>");
+                            c+=("</tr>");
+                        }
+                        c+=("</tbody>");
                         return c;
                     }
-                    var jsontext = '{"firstname":"Jesper","surname":"Aaberg","phone":["555-0100","555-0120"]}';
-                    var response = $.parseJSON(jsontext);
+                    var response = $.parseJSON(data);
                     var c=createTable(response);
-                    $(this).html(c.join(""));
+                    $(c).insertAfter(".dataColumns");
                 })
             },
         };
-    $.fn.ajaxGrid= function( method ) {
+    $.fn.ajaxGrid= function( method) {
         if ( methods[method] ) {
             return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
         } else if ( typeof method === 'object' || ! method ) {
