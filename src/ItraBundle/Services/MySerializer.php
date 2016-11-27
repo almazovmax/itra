@@ -8,7 +8,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 
-class CategorySerializer
+class MySerializer
 {
     public function serializer()
     {

@@ -1,5 +1,4 @@
 <?php
-
 namespace ItraBundle\Controller;
 
 use ItraBundle\Entity\Category;
@@ -8,12 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 
 /**
  * Category controller.
@@ -33,8 +26,7 @@ class CategoryController extends Controller
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('ItraBundle:Category')->findALL();
 
-        $serializer = $this->get('app.category_serialize')->serializer();
-
+        $serializer = $this->get('app.my_serialize')->serializer();
         $tree = $serializer->serialize($categories, 'json', array('groups' => array('category')));
 
         return $this->render('category/index.html.twig', array(

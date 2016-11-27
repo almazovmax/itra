@@ -1,7 +1,6 @@
 <?php
 namespace ItraBundle\Services;
 
-
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace ItraBundle\Services;
 
 use ItraBundle\Entity\Product;

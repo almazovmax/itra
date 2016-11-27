@@ -6,6 +6,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Table(name="app_users")
@@ -19,21 +20,29 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Groups({"user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
+     *
+     * @Groups({"user"})
      */
     private $username;
 
     /**
      * @ORM\Column(name="first_name", type="string", length=255)
+     *
+     * @Groups({"user"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(name="last_name", type="string", length=255)
+     *
+     * @Groups({"user"})
      */
     private $lastName;
 
@@ -48,11 +57,15 @@ class User implements UserInterface, \Serializable
      *     message = "The email '{{ value }}' is not a valid email.",
      *     checkMX = true
      * )
+     *
+     * @Groups({"user"})
      */
     private $email;
 
     /**
      * @ORM\Column(name="is_active", type="boolean", nullable=true)
+     *
+     * @Groups({"user"})
      */
     private $isActive;
 
@@ -63,6 +76,8 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=64)
+     *
+     * @Groups({"user"})
      */
     private $role;
 

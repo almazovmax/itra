@@ -1,5 +1,4 @@
 <?php
-
 namespace ItraBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -33,6 +32,4 @@ class CategoryType extends AbstractType
     {
         return 'itrabundle_category';
     }
-
-
 }

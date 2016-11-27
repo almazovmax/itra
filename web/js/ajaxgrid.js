@@ -4,9 +4,9 @@
 
 (function( $ ) {
     var settings =  {
-        'dataURL'          : 'http://127.0.0.1:8000/product/ajax?sortbyfield=id&order=asc&filterbyfield=&pattern=',
+        'dataURL'          : 'http://127.0.0.1:8000/product/ajax?sortbyfield=id&order=asc&filterbyfield=name&pattern=',
         'sortableColumns'  : '[“id”, “name”, “dateCreate”]',
-        'filterableColumns': '[“name”]',
+        'filterableColumns': '[“name”, "category", "dateCreate"]',
         'rowsPerPage'      : '20'
     };
     var methods = {
@@ -74,7 +74,7 @@
                 }
                 var response = $.parseJSON(data);
                 var c=createTable(response);
-                $(buffDOM).append("<table class='sortable table table-hover table-bordered'>"+c+"</table>");
+                $(buffDOM).append("<table class='sortable table table-hover table-bordered table-responsive'>"+c+"</table>");
             })
         },
         update : function( params ) {

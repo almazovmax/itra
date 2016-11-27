@@ -35,15 +35,15 @@
             </div>
             <script type="text/javascript">
                 var settings= {
-                    'dataURL':'http://127.0.0.1:8000/product/',
+                    'dataURL':'http://127.0.0.1:8000/product/ajax?sortbyfield=id&order=asc&filterbyfield=name&pattern=',
                     'sortbyfield': 'id',
                     'order': 'asc',
-                    'filterbyfield': 'null',
-                    'pattern': 'null',
+                    'filterbyfield': '',
+                    'pattern': '',
                     'page': '1'
-                }
+                };
                 document.addEventListener("DOMContentLoaded", function() {
-                    $("#entities-grid").ajaxGrid();
+                    $("#entities-grid").ajaxGrid(settings);
                 });
                 $("#entities-grid").on("keyup",".filter",function () {
                     settings.filterbyfield=this.parentElement.id;

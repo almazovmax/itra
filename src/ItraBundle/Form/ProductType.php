@@ -1,5 +1,4 @@
 <?php
-
 namespace ItraBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -55,6 +54,4 @@ class ProductType extends AbstractType
     {
         return 'itrabundle_product';
     }
-
-
 }

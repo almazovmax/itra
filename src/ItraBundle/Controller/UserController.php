@@ -1,5 +1,4 @@
 <?php
-
 namespace ItraBundle\Controller;
 
 use ItraBundle\Entity\User;
@@ -10,22 +9,52 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 class UserController extends Controller
 {
+    private $limitPerPage = 10;
+
     /**
      * Lists all user entities.
      *
      * @Route("/user", name="user_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('ItraBundle:User')->findAll();
-
+        $pagination = $this->pagination($request);
         return $this->render('user/index.html.twig', array(
-            'users' => $users,
+            'pagination' => $pagination,
         ));
+    }
+
+    /**
+     * Lists all product entities.
+     *
+     * @Route("/user/ajax", name="user_list_ajax")
+     * @Method("GET")
+     */
+    public function ajaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest()) {
+            $pagination = $this->pagination($request);
+            $serializer = $this->get('app.my_serialize')->serializer();
+
+            return new JsonResponse($serializer->serialize($pagination, 'json', array('groups' => array('user'))));
+        }
+    }
+
+    public function pagination(Request $request)
+    {
+        $query = $this->get('pagination')->paginator($request, 'User');
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $this->limitPerPage);
+
+        return $pagination;
     }
 
     /**
@@ -60,6 +89,15 @@ class UserController extends Controller
             'user' => $user,
             'form' => $form->createView(),
         ));
+    }
+
+    private function setFlash($message)
+    {
+        $session = new Session();
+
+        return $session
+            ->getFlashBag()
+            ->add('Reset', $message);
     }
 
     /**
@@ -121,14 +159,5 @@ class UserController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
-    }
-
-    private function setFlash($message)
-    {
-        $session = new Session();
-
-        return $session
-            ->getFlashBag()
-            ->add('Reset', $message);
     }
 }

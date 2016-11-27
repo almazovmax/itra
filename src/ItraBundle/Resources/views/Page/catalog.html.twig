@@ -3,7 +3,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('js/category_tree.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/category_catalog.js') }}"></script>
 {% endblock %}
 
 {% block stylesheet %}
@@ -11,14 +10,13 @@
     <link href="{{ asset('css/category_tree.css') }}" rel="stylesheet" type="text/css" media="all" />
 {% endblock %}
 {% block body %}
-
     <!--start-breadcrumbs-->
     <div class="breadcrumbs">
         <div class="container">
             <div class="breadcrumbs-main">
                 <ol class="breadcrumb">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active">New Products</li>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li class="active">Catalog</li>
                 </ol>
             </div>
         </div>
@@ -33,11 +31,11 @@
                     {% for product in pagination %}
                         <div class="col-md-4 product-left p-left">
                             <div class="product-main simpleCart_shelfItem">
-                                <a href="single.html" class="mask"><img class="img-responsive zoom-img" src="{{ asset(product.image) }}" alt="" /></a>
+                                <a href="#" class="mask"><img class="img-responsive zoom-img" src="{{ asset(product.image) }}" alt="" /></a>
                                 <div class="product-bottom">
                                     <h3>{{ product.category }}</h3>
                                     <p>{{ product.name }}</p>
-                                    <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ {{ product.sku }}9</span></h4>
+                                    <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ {{ product.price }}9</span></h4>
                                 </div>
                                 <div class="srch srch1">
                                     <span>-50%</span>
@@ -54,7 +52,7 @@
                             <div class="row1 scroll-pane">
                                 <div class="col col-4">
                                     {% macro recursiveCategory(category) %}
-                                        <li id="li" data-id="{{ category.id }}">
+                                        <li>
                                             <a href="{{ path('category_show', { 'id': category.id }) }}">{{ category }}</a>
 
                                             {% if category.children|length %}
@@ -85,7 +83,6 @@
                 <script type="text/javascript">
                     $('#tree').treed({openedClass:'glyphicon-chevron-right', closedClass:'glyphicon-chevron-down'});
                 </script>
-
                 <div class="pagenatin">
                     <div class="col-md-6">
                         <nav>
@@ -93,7 +90,6 @@
                         </nav>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

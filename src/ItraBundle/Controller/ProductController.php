@@ -1,5 +1,4 @@
 <?php
-
 namespace ItraBundle\Controller;
 
 use ItraBundle\Entity\Product;
@@ -16,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductController extends Controller
 {
+    private $limitPerPage = 10;
+
     /**
      * Lists all product entities.
      *
@@ -25,13 +26,7 @@ class ProductController extends Controller
     public function indexAction(Request $request)
     {
         $pagination = $this->pagination($request);
-
-        $serializer = $this->get('app.product_serialize')->serializer();
-
-        $tree = $serializer->serialize($pagination, 'json');
-
         return $this->render('product/index.html.twig', array(
-            'tree' => $tree,
             'pagination' => $pagination,
         ));
     }
@@ -44,17 +39,21 @@ class ProductController extends Controller
      */
     public function ajaxAction(Request $request)
     {
-        //var_dump($request); die;
-
-
-
-
         if($request->isXmlHttpRequest()) {
-            $pagination = $this->paginationAjax($request);
+            $pagination = $this->pagination($request);
             $serializer = $this->get('app.product_serialize')->serializer();
 
             return new JsonResponse($serializer->serialize($pagination, 'json'));
         }
+    }
+
+    public function pagination(Request $request)
+    {
+        $query = $this->get('pagination')->paginator($request, 'Product');
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $this->limitPerPage);
+
+        return $pagination;
     }
 
     /**
@@ -166,48 +165,5 @@ class ProductController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
-    }
-
-    public function pagination(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $query = $em
-            ->getRepository('ItraBundle:Product')
-            ->createQueryBuilder('u')
-            ->getQuery();
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 6);
-
-        return $pagination;
-    }
-
-    public function paginationAjax(Request $request)
-    {
-
-        $sortByField = $request->get('sortbyfield');
-        $orderBy = $request->get('order');
-        $filterByField = $request->get('filterbyfield');
-        $pattern = $request->get('pattern');
-
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em
-            ->getRepository('ItraBundle:Product')
-            ->createQueryBuilder('u');
-
-        if($pattern){
-            $query = $qb
-                ->where($qb->expr()->like('u.'.$filterByField, ':pattern'))
-                ->setParameter('pattern', '%'.$pattern.'%')
-                ->orderBy('u.'.$sortByField, $orderBy)
-                ->getQuery();
-        } else {
-            $query = $qb
-                ->orderBy('u.'.$sortByField, $orderBy)
-                ->getQuery();
-        }
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 6);
-
-        return $pagination;
     }
 }

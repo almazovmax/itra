@@ -1,5 +1,4 @@
 <?php
-
 namespace ItraBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -276,5 +275,4 @@ class Product
     {
         $this->myRelation = $myRelation;
     }
-
   }

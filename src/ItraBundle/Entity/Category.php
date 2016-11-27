@@ -1,5 +1,4 @@
 <?php
-
 namespace ItraBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -128,6 +127,5 @@ class Category
     {
         $this->parent = $parent;
     }
-
 }
 

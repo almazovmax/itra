@@ -20,8 +20,8 @@ services:
     app.product_serialize:
         class: ItraBundle\Services\ProductSerializer
 
-    app.category_serialize:
-        class: ItraBundle\Services\CategorySerializer
+    app.my_serialize:
+        class: ItraBundle\Services\MySerializer
 
     #app.exception_listener:
     #    class: ItraBundle\Services\RedirectUserListener
@@ -29,3 +29,7 @@ services:
     #                - "@router"
     #    tags:
     #        - { name: kernel.event_listener, event: kernel.exception }
+
+    pagination:
+        class: ItraBundle\Services\Pagination
+        arguments: [ "@doctrine.orm.entity_manager" ]
