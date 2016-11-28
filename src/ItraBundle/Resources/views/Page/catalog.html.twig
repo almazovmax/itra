@@ -32,7 +32,7 @@
                     {% for product in pagination %}
                         <div class="col-md-4 product-left p-left">
                             <div class="product-main simpleCart_shelfItem">
-                                <a href="#" class="mask"><img class="img-responsive zoom-img" src="{{ asset(product.image) }}" alt="" /></a>
+                                <a href="{{ path('product_show', {'id': product.id}) }}" class="mask"><img class="img-responsive zoom-img" src="{{ asset(product.image) }}" alt="" /></a>
                                 <div class="product-bottom">
                                     <h3>{{ product.category }}</h3>
                                     <p>{{ product.name }}</p>
@@ -53,7 +53,7 @@
                 <div class="clearfix"></div>
                 <div class="pagenatin">
                     <nav>
-                        {{ knp_pagination_render(pagination) }}
+                        {#{{ knp_pagination_render(pagination) }}#}
                     </nav>
                 </div>
             </div>
@@ -62,11 +62,11 @@
     <!--product-end-->
     <script type="text/javascript">
         var settings = {
-            'dataURL': 'http://127.0.0.1:8000/category/ajax',
+            'dataURL': '/category/ajax',
             'id': '1'
         };
         document.addEventListener("DOMContentLoaded", function() {
-            $(".w_sidebar").jsTree({'dataURL': 'http://127.0.0.1:8000/category/ajax'});
+            $(".w_sidebar").jsTree({'dataURL': 'category/ajax'});
         });
         $(function() {
             $(document).on('click', 'li a', function() {

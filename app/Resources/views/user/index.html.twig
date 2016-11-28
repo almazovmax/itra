@@ -26,7 +26,7 @@
         <div id="entities-grid"></div>
         <script type="text/javascript">
             var settings= {
-                'dataURL':'http://127.0.0.1:8000/user/ajax?sortbyfield=id&order=asc&filterbyfield=username&pattern=',
+                'dataURL':'/user/ajax?sortbyfield=id&order=asc&filterbyfield=username&pattern=',
                 'sortbyfield': 'id',
                 'order': 'asc',
                 'filterbyfield': '',
@@ -71,7 +71,7 @@
                 }
             }
             function generateURL(){
-                return window.location.href+"/ajax?sortbyfield="+settings.sortbyfield+"&order="+settings.order+
+                return window.location.href+"ajax?sortbyfield="+settings.sortbyfield+"&order="+settings.order+
                         "&filterbyfield="+settings.filterbyfield+"&pattern="+settings.pattern+"&page="+settings.page;
             }
         </script>

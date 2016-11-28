@@ -1,6 +1,6 @@
 (function( $ ) {
     var settings = {
-        'dataURL': 'http://127.0.0.1:8000/category/ajax'
+        'dataURL': '/category/ajax'
     };
     function getURL(obj) {
         return "<i class='edit' id="+ obj.id + ">" + "<span class='glyphicon glyphicon-eye-open'></span></i>";

@@ -41,6 +41,7 @@ security:
             - { path: ^/reset_pass, allow_if: "not has_role('ROLE_USER')" }
             - { path: ^/input_new_password, allow_if: "not has_role('ROLE_USER')" }
             - { path: ^/catalog, roles: ROLE_USER }
+            - { path: ^/category/ajax, roles: ROLE_USER }
             - { path: ^/product, roles: ROLE_MODERATOR }
             - { path: ^/category, roles: ROLE_MODERATOR }
             - { path: ^/user, roles: ROLE_MODERATOR }

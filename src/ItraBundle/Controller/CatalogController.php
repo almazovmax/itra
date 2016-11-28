@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CatalogController extends Controller
 {
-    private $limitPerPage = 9;
+    private $limitPerPage = 100;
 
     /**
      * @Route("/catalog", name="catalog")

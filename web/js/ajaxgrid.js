@@ -4,7 +4,7 @@
 
 (function( $ ) {
     var settings =  {
-        'dataURL'          : 'http://127.0.0.1:8000/product/ajax?sortbyfield=id&order=asc&filterbyfield=name&pattern=',
+        'dataURL'          : '/product/ajax?sortbyfield=id&order=asc&filterbyfield=name&pattern=',
         'sortableColumns'  : '[“id”, “name”, “dateCreate”]',
         'filterableColumns': '[“name”, "dateCreate"]',
         'rowsPerPage'      : '20',
@@ -15,10 +15,10 @@
             function getURL(obj,mark) {
                 switch (mark) {
                     case '1':
-                        return "<a href=" + window.location.href+"/" + obj.id + "/edit>" + "<span class='glyphicon glyphicon-pencil'></span>" + "";
+                        return "<a href=" + window.location.href + obj.id + "/edit>" + "<span class='glyphicon glyphicon-pencil'></span>" + "";
                         break;
                     default:
-                        return "<a href=" + window.location.href+"/" + obj.id + ">" + obj.name + "";
+                        return "<a href=" + window.location.href + obj.id + ">" + obj.name + "";
                         break;
                 }
             }
