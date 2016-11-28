@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CatalogController extends Controller
 {
@@ -16,13 +17,24 @@ class CatalogController extends Controller
     public function indexAction(Request $request)
     {
         $pagination = $this->pagination($request);
-        $em = $this->getDoctrine()->getManager();
-        $categories = $em->getRepository('ItraBundle:Category')->findAll();
 
         return $this->render('ItraBundle:Page:catalog.html.twig', array(
             'pagination' => $pagination,
-            'categories' => $categories,
         ));
+    }
+
+    /**
+     * @Route("/catalog/ajax", name="catalog_ajax")
+     */
+    public function ajaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest()) {
+            $pagination = $this->pagination($request);
+
+            return $this->render('ItraBundle:Page:catalog_ajax.html.twig', array(
+                'pagination' => $pagination,
+            ));
+        }
     }
 
     public function pagination(Request $request)
@@ -30,6 +42,7 @@ class CatalogController extends Controller
         $query = $this->get('pagination')->paginatorCatalog($request, 'Product');
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $this->limitPerPage);
+
 
         return $pagination;
     }

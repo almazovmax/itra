@@ -1,0 +1,11 @@
+.on {
+    margin: 10px;
+}
+
+.edit {
+    float: right;
+    cursor: pointer;
+}
+.glyphicon-folder-close, .glyphicon-folder-open {
+    cursor: pointer;
+}

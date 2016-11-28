@@ -6,18 +6,19 @@
     var settings =  {
         'dataURL'          : 'http://127.0.0.1:8000/product/ajax?sortbyfield=id&order=asc&filterbyfield=name&pattern=',
         'sortableColumns'  : '[“id”, “name”, “dateCreate”]',
-        'filterableColumns': '[“name”, "category", "dateCreate"]',
-        'rowsPerPage'      : '20'
+        'filterableColumns': '[“name”, "dateCreate"]',
+        'rowsPerPage'      : '20',
+        'page'             : '1'
     };
     var methods = {
         init : function( params ) {
             function getURL(obj,mark) {
                 switch (mark) {
                     case '1':
-                        return "<a href=" + window.location.href + obj.id + "/edit>" + "<span class='glyphicon glyphicon-pencil'></span>" + "";
+                        return "<a href=" + window.location.href+"/" + obj.id + "/edit>" + "<span class='glyphicon glyphicon-pencil'></span>" + "";
                         break;
                     default:
-                        return "<a href=" + window.location.href + obj.id + ">" + obj.name + "</a>";
+                        return "<a href=" + window.location.href+"/" + obj.id + ">" + obj.name + "";
                         break;
                 }
             }
@@ -38,7 +39,7 @@
                             else if(options.sortableColumns.includes(prop)){
                                 c+=("<th class='sortableColumn'"+"id='"+prop+"'>" +prop+"<buttom style='float: right' class='sort btn btn-info btn-xs'><span class='glyphicon glyphicon-resize-vertical'></span></buttom>" + "</th>");
                             }else if (options.filterableColumns.includes(prop)){
-                                c+=("<th class='filterableColumn'>" +"<input class='filter' id='"+prop+"' placeholder='Type to filter'>"+"<br/>"+prop+"</th>");
+                                c+=("<th  id='"+prop+"' class='filterableColumn'>" +"<input class='filter' placeholder='Type to filter'>"+"<br/>"+prop+"</th>");
                             }else
                                 c+=("<th>" + prop + "</th>");
                         }
@@ -75,6 +76,17 @@
                 var response = $.parseJSON(data);
                 var c=createTable(response);
                 $(buffDOM).append("<table class='sortable table table-hover table-bordered table-responsive'>"+c+"</table>");
+                $(buffDOM).append("<div id='paging'>"
+                    +"<ul class='pagination'>"
+                    +"<li id='prev'><a href='javascript:prev()'>Prev</a></li>"
+                    +"<li class='active'>"
+                    +"<span>"
+                    +options.page
+                    +"</span>"
+                    +"</li>"
+                    +"<li id='next' onclick=''><a href='javascript:next()'>Next</a></li>"
+                    +"</ul>"
+                    +"</div>");
             })
         },
         update : function( params ) {
@@ -91,6 +103,7 @@
             var options = $.extend({}, settings, params);
             $.getJSON(options.dataURL,function (data) {
                 $("#dataRows").remove();
+                $("#paging").remove();
                 function createTable(response)
                 {
                     var c = [];
@@ -122,6 +135,17 @@
                 var response = $.parseJSON(data);
                 var c=createTable(response);
                 $(c).insertAfter(".dataColumns");
+                $("<div id='paging'>"
+                    +"<ul class='pagination'>"
+                    +"<li id='prev'><a href='javascript:prev()'>Prev</a></li>"
+                    +"<li class='active'>"
+                    +"<span>"
+                    +options.page
+                    +"</span>"
+                    +"</li>"
+                    +"<li id='next'><a href='javascript:next()'>Next</a></li>"
+                    +"</ul>"
+                    +"</div>").insertAfter('.sortable');
             })
         },
     };

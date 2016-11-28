@@ -39,23 +39,28 @@ class Pagination
         return $query;
     }
 
-    public function paginatorCatalog(Request $request, $entity)
+    public function paginatorCatalog(Request $request)
     {
         $category = $request->get('category');
         $orderBy = $request->get('order') ? : 'asc';
 
         $qb = $this->em
-            ->getRepository('ItraBundle:'.$entity)
-            ->createQueryBuilder('u');
+            //->getRepository('ItraBundle:Product')
+            ->createQueryBuilder();
 
         if($category){
             $query = $qb
-                ->where('category = :category')
-                ->setParameter('category', $category)
+                ->select('a')
+                ->from('ItraBundle:Product', 'a')
+                ->where($qb->expr()->eq('a.category', $category))
+                ->join('a.category', 'category')
+                //->setParameter('category_id', $category)
                 ->getQuery();
         } else {
             $query = $qb
-                ->orderBy('u.category', $orderBy)
+                ->select('a')
+                ->from('ItraBundle:Product', 'a')
+                ->orderBy('a.category', $orderBy)
                 ->getQuery();
         }
 

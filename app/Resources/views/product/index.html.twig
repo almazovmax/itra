@@ -28,11 +28,6 @@
                 <a class="btn btn-info" href="{{ path('product_new') }}">Create a new product</a>
             </div>
             <div id="entities-grid"></div>
-            <div class="pagenatin">
-                <nav>
-                    {{ knp_pagination_render(pagination) }}
-                </nav>
-            </div>
             <script type="text/javascript">
                 var settings= {
                     'dataURL':'http://127.0.0.1:8000/product/ajax?sortbyfield=id&order=asc&filterbyfield=name&pattern=',
@@ -48,9 +43,10 @@
                 $("#entities-grid").on("keyup",".filter",function () {
                     settings.filterbyfield=this.parentElement.id;
                     settings.pattern=this.value;
+                    settings.page=1;
                     settings.dataURL=generateURL();
                     console.log(settings);
-                    $("#entities-grid").ajaxGrid('update',{'dataURL':settings.dataURL});
+                    $("#entities-grid").ajaxGrid('update',{'dataURL':settings.dataURL, 'page':settings.page});
                 });
                 $("#entities-grid").on("click",".sort",function () {
                     settings.sortbyfield=this.parentElement.id;
@@ -61,13 +57,21 @@
                     $("#entities-grid").ajaxGrid('update',{'dataURL':settings.dataURL});
                 });
                 function next() {
-                    //...
+                    if (settings.page<{{ pagination.pageCount }}) {
+                        settings.page++;
+                        settings.dataURL = generateURL();
+                        $("#entities-grid").ajaxGrid('update', {'dataURL': settings.dataURL, 'page':settings.page});
+                    }
                 }
-                function previous() {
-                    //...
+                function prev() {
+                    if(settings.page>1) {
+                        settings.page--;
+                        settings.dataURL = generateURL();
+                        $("#entities-grid").ajaxGrid('update', {'dataURL': settings.dataURL, 'page':settings.page});
+                    }
                 }
                 function generateURL(){
-                    return "http://127.0.0.1:8000/product/ajax?sortbyfield="+settings.sortbyfield+"&order="+settings.order+
+                    return window.location.href+"ajax?sortbyfield="+settings.sortbyfield+"&order="+settings.order+
                             "&filterbyfield="+settings.filterbyfield+"&pattern="+settings.pattern+"&page="+settings.page;
                 }
             </script>

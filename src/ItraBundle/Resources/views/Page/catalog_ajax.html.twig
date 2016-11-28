@@ -1,11 +1,11 @@
 {% for product in pagination %}
     <div class="col-md-4 product-left p-left">
         <div class="product-main simpleCart_shelfItem">
-            <a href="single.html" class="mask"><img class="img-responsive zoom-img" src="{{ asset(product.image) }}" alt="" /></a>
+            <a href="" class="mask"><img class="img-responsive zoom-img" src="{{ asset(product.image) }}" alt="" /></a>
             <div class="product-bottom">
                 <h3>{{ product.category }}</h3>
                 <p>{{ product.name }}</p>
-                <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ {{ product.sku }}9</span></h4>
+                <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ {{ product.price }}9</span></h4>
             </div>
             <div class="srch srch1">
                 <span>-50%</span>

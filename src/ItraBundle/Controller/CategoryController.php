@@ -19,29 +19,9 @@ class CategoryController extends Controller
      * Lists all category entities.
      *
      * @Route("/", name="category_index")
-     * @Method("GET")
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $categories = $em->getRepository('ItraBundle:Category')->findALL();
-
-        $serializer = $this->get('app.my_serialize')->serializer();
-        $tree = $serializer->serialize($categories, 'json', array('groups' => array('category')));
-
-        return $this->render('category/index.html.twig', array(
-            'categories' => $categories,
-            'tree' => $tree,
-        ));
-    }
-
-    /**
-     * Creates a new category entity.
-     *
-     * @Route("/new", name="category_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function indexAction(Request $request)
     {
         $category = new Category();
         $form = $this->createForm('ItraBundle\Form\CategoryType', $category);
@@ -52,29 +32,30 @@ class CategoryController extends Controller
             $em->persist($category);
             $em->flush($category);
 
-            return $this->redirectToRoute('category_show', array('id' => $category->getId()));
+            return $this->redirectToRoute('category_index');
         }
 
-        return $this->render('category/new.html.twig', array(
-            'category' => $category,
+        return $this->render('category/index.html.twig', array(
             'form' => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a category entity.
+     * Lists all categories entities.
      *
-     * @Route("/{id}", name="category_show")
-     * @Method("GET")
+     * @Route("/ajax", name="categories_list_ajax")
+     * @Method({"GET", "POST"})
      */
-    public function showAction(Category $category)
+    public function ajaxAction(Request $request)
     {
-        $deleteForm = $this->createDeleteForm($category);
+        if($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $categories = $em->getRepository('ItraBundle:Category')->findBy(array('parent' => null), array('name' => 'ASC'));
 
-        return $this->render('category/show.html.twig', array(
-            'category' => $category,
-            'delete_form' => $deleteForm->createView(),
-        ));
+            $serializer = $this->get('app.my_serialize')->serializer();
+
+            return new JsonResponse($serializer->serialize($categories, 'json', array('groups' => array('category'))));
+        }
     }
 
     /**
@@ -92,7 +73,7 @@ class CategoryController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('category_show', array('id' => $category->getId()));
+            return $this->redirectToRoute('category_index');
         }
 
         return $this->render('category/edit.html.twig', array(
