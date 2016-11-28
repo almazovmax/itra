@@ -32,7 +32,7 @@
                     {% for product in pagination %}
                         <div class="col-md-4 product-left p-left">
                             <div class="product-main simpleCart_shelfItem">
-                                <a href="{{ path('product_show', {'id': product.id}) }}" class="mask"><img class="img-responsive zoom-img" src="{{ asset(product.image) }}" alt="" /></a>
+                                <a {% if is_granted('ROLE_MODERATOR') %} href="{{ path('product_show', {'id': product.id}) }}" {% endif %} class="mask"><img class="img-responsive zoom-img" src="{{ asset(product.image) }}" alt="" /></a>
                                 <div class="product-bottom">
                                     <h3>{{ product.category }}</h3>
                                     <p>{{ product.name }}</p>
@@ -79,15 +79,19 @@
                     $(this).find('span').addClass('glyphicon glyphicon-folder-close');
                 }
                 $(this).parents('li').each(function(i) { $(this).siblings().find('ul').slideUp(); });
-                console.log($(this).next('ul'));
                 $(this).nextAll('ul').slideToggle(function() { if (!$(this).is(':visible')) $(this).find('ul').hide(); });
             });
             $(document).on('click', '.edit', function(){
                 settings.id=this.id;
                 settings.dataURL=generateURL();
                 $.get( settings.dataURL, function( data ) {
-                    $(".product-left").remove();
-                    $( ".product-one" ).html( data );
+                    if(data) {
+                        $(".product-left").remove();
+                        $(".product-one").html(data);
+                    } else {
+                        $(".product-left").remove();
+                        $(".product-one").html('No matches found.');
+                    }
                 });
             });
         });

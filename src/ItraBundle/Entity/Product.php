@@ -22,11 +22,15 @@ class Product
     /**
      * @ORM\ManyToOne(targetEntity="Category", fetch="EAGER")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     *
+     * @Assert\NotBlank(message="Please, choice category")
      */
     private $category;
 
     /**
      * @ORM\Column(name="name", type="string", length=100)
+     *
+     * @Assert\NotBlank(message="Please, enter product name")
      */
     private $name;
 
@@ -42,6 +46,8 @@ class Product
 
     /**
      * @ORM\Column(name="date_create", type="date", length=100)
+     *
+     * @Assert\NotBlank(message="Please, input date create")
      */
     private $dateCreate;
 

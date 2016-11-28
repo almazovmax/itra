@@ -35,7 +35,6 @@
             var buffDOM=this;
             $.getJSON(options.dataURL,function (data) {
                 var response = $.parseJSON(data);
-                console.log(response);
                 var c = createTree(response);
                 $(buffDOM).append("<ul class='list-group'id='nav'>"+c+"</ul>");
             });

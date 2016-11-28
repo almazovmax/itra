@@ -28,6 +28,8 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=25, unique=true)
      *
+     *
+     *
      * @Groups({"user"})
      */
     private $username;
@@ -35,12 +37,16 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(name="first_name", type="string", length=255)
      *
+     *
+     *
      * @Groups({"user"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(name="last_name", type="string", length=255)
+     *
+     *
      *
      * @Groups({"user"})
      */

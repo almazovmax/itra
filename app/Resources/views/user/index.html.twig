@@ -45,7 +45,6 @@
                 settings.pattern=this.value;
                 settings.page=1;
                 settings.dataURL=generateURL();
-                console.log(settings);
                 $("#entities-grid").ajaxGrid('update',{'dataURL':settings.dataURL, 'page':settings.page});
             });
             $("#entities-grid").on("click",".sort",function () {
@@ -53,7 +52,6 @@
                 if(settings.order=="asc"){settings.order="desc"}
                 else {settings.order="asc"}
                 settings.dataURL=generateURL();
-                console.log(settings);
                 $("#entities-grid").ajaxGrid('update',{'dataURL':settings.dataURL});
             });
             function next() {

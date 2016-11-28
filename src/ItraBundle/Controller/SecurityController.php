@@ -44,7 +44,7 @@ class SecurityController extends Controller
             if(!$user) {
                 $notice = 'Invalid Name or Email';
             } else {
-                $url = 'http://127.0.0.1:8000/new_password'.'?token='.$token;
+                $url = 'http://itra.com/new_password'.'?token='.$token;
                 $message = \Swift_Message::newInstance()
                     ->setSubject('Reset Password')
                     ->setFrom('itra@lol.by')

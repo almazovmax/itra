@@ -1,6 +1,9 @@
 {% extends "::base.html.twig" %}
 
-
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
+    {% endblock %}
 {% block body %}
     <!--banner-starts-->
     <div class="bnr" id="home">
@@ -86,7 +89,7 @@
                     {% for product in products %}
                         <div class="col-md-3 product-left">
                             <div class="product-main simpleCart_shelfItem">
-                                <a href="" class="mask"><img class="img-responsive zoom-img" src="{{ product.image }}" alt="" /></a>
+                                <a {% if is_granted('ROLE_MODERATOR') %} href="{{ path('product_show', {'id': product.id}) }}" {% endif %} class="mask"><img class="img-responsive zoom-img" src="{{ product.image }}" alt="" /></a>
                                 <div class="product-bottom">
                                     <h3>{{ product.category }}</h3>
                                     <p>{{ product.name }}</p>

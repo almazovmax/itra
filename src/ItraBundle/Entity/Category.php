@@ -4,6 +4,7 @@ namespace ItraBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -25,13 +26,13 @@ class Category
 
     /**
      * @ORM\Column(name="category_name", type="string", length=255, unique=true)
-     *
+     * @Assert\NotBlank(message="Please, enter category name")
      * @Groups({"category"})
      */
     private $name;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="is_active", type="boolean", nullable=true)
      */
     private $isActive;
 

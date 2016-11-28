@@ -89,7 +89,6 @@
                     $(this).find('span').addClass('glyphicon glyphicon-folder-close');
                 }
                 $(this).parents('li').each(function(i) { $(this).siblings().find('ul').slideUp(); });
-                console.log($(this).next('ul'));
                 $(this).nextAll('ul').slideToggle(function() { if (!$(this).is(':visible')) $(this).find('ul').hide(); });
             });
             $(document).on('click', '.edit', function(){
